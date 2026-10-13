@@ -1,5 +1,3 @@
-namespace Suit
-{
     public enum Suit
     {
         Hearts,
@@ -7,4 +5,3 @@ namespace Suit
         Clubs,
         Spades
     }
-}
