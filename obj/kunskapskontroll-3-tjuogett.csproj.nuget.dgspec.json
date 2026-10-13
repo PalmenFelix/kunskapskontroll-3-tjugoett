@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Övning kod\\kunskapskontroll-3-tjuogett\\kunskapskontroll-3-tjuogett.csproj": {}
+    "C:\\Users\\phili\\C#-kurs\\Kunskapskontroll-3\\kunskapskontroll-3-tjugoett\\kunskapskontroll-3-tjuogett.csproj": {}
   },
   "projects": {
-    "C:\\Övning kod\\kunskapskontroll-3-tjuogett\\kunskapskontroll-3-tjuogett.csproj": {
+    "C:\\Users\\phili\\C#-kurs\\Kunskapskontroll-3\\kunskapskontroll-3-tjugoett\\kunskapskontroll-3-tjuogett.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Övning kod\\kunskapskontroll-3-tjuogett\\kunskapskontroll-3-tjuogett.csproj",
+        "projectUniqueName": "C:\\Users\\phili\\C#-kurs\\Kunskapskontroll-3\\kunskapskontroll-3-tjugoett\\kunskapskontroll-3-tjuogett.csproj",
         "projectName": "kunskapskontroll-3-tjuogett",
-        "projectPath": "C:\\Övning kod\\kunskapskontroll-3-tjuogett\\kunskapskontroll-3-tjuogett.csproj",
-        "packagesPath": "C:\\Users\\felix\\.nuget\\packages\\",
-        "outputPath": "C:\\Övning kod\\kunskapskontroll-3-tjuogett\\obj\\",
+        "projectPath": "C:\\Users\\phili\\C#-kurs\\Kunskapskontroll-3\\kunskapskontroll-3-tjugoett\\kunskapskontroll-3-tjuogett.csproj",
+        "packagesPath": "C:\\Users\\phili\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\phili\\C#-kurs\\Kunskapskontroll-3\\kunskapskontroll-3-tjugoett\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\felix\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\phili\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
