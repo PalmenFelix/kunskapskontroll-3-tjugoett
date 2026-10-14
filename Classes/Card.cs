@@ -4,7 +4,7 @@ public enum Suit
     Hearts,
     Diamonds,
     Clubs,
-    Spades
+    Spades,
 }
 
 public enum Rank
@@ -13,9 +13,8 @@ public enum Rank
     Eight, Nine, Ten, Jack, Queen, King
 }
 
-public class Card
+public class Card 
 {
     public Suit Suit;
-    public Rank Rank;
+    public Rank Rank; 
 }
-//
