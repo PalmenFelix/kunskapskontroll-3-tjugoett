@@ -11,7 +11,7 @@ class Deck
         {
              foreach (Rank rank in Enum.GetValues<Rank>())
             {
-                cards.Add(new Card(suit, rank));
+                cards.Add(new Card{Suit = suit, Rank=rank});
             }
         }
     }
