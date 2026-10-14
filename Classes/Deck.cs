@@ -1,4 +1,6 @@
 
+using System.Runtime.CompilerServices;
+
 class Deck
 {
     private List <Card> cards = new List<Card>();
@@ -22,5 +24,16 @@ class Deck
             int j =random.Next(0, i+1);
             (cards[i], cards[j]) = (cards[j], cards[i]);
         }
+    }
+    public Card Deal()
+    {
+        int lastIndex = cards.Count -1;
+        Card card = cards[lastIndex];
+        cards.RemoveAt(lastIndex);
+        return card;
+    }
+    public int GetCount()
+    {
+        return cards.Count;
     }
 }
