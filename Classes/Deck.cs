@@ -1,6 +1,4 @@
 
-using System.Runtime.CompilerServices;
-
 class Deck
 {
     private List <Card> cards = new List<Card>();
@@ -27,6 +25,10 @@ class Deck
     }
     public Card Deal()
     {
+        if (cards.Count == 0)
+        {
+            throw new InvalidOperationException("Kortleken är tomt"); 
+        }
         int lastIndex = cards.Count -1;
         Card card = cards[lastIndex];
         cards.RemoveAt(lastIndex);
