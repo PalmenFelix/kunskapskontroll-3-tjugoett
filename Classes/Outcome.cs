@@ -4,8 +4,5 @@ public enum Outcome
     Lose,
     Push,
     Blackjack
-    
-
-
 
 }
