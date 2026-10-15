@@ -13,11 +13,14 @@ public class Round
     }
 
 
-    //Start Round: startar rundan
+    // StartRound: startar rundan
     public void StartRound()
     {
+        Player.Hand.Cards.Clear();
+        Dealer.Hand.Cards.Clear();
+        
         DealCards();
-        PlayersTurns();
+        PlayerTurn();
         DealerTurn();
         Result = CheckWinner();
     }
@@ -46,7 +49,6 @@ public class Round
             }
             else if (input == // Från ConsoleUI)
             {
-                PlayerStand();
                 playing = false;
             }
             else
@@ -59,11 +61,6 @@ public class Round
     private void PlayerHit()
         {
             Player.Hand.Cards.Add(Deck.Deal());
-        }
-
-    private void PlayerStand()
-        {
-            // Körs i PlayerTurn
         }
 
     // DealerTurn: Dealerns tur
