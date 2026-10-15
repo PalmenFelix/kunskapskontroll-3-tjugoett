@@ -1,4 +1,5 @@
-class Move
+public enum Move
 {
-    
+    Hit,
+    Stand
 }
