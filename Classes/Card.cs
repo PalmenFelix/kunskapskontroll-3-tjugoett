@@ -1,3 +1,5 @@
+using System;
+
 class Card 
 {
     public Suit Suit;
@@ -32,7 +34,7 @@ class Card
                     return 10;
                 case Rank.ace:
                     return 11;
-                    
+
                 default:
                 throw new ArgumentOutOfRangeException();
             }
