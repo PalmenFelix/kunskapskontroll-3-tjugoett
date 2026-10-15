@@ -1,3 +1,5 @@
+using System;
+
 public class Card 
 {
     public Suit Suit;
