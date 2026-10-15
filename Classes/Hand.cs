@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-class Hand
+public class Hand
 {
     public List<Card> Cards { get; } = new List<Card>();
 
