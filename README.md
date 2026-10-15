@@ -18,3 +18,4 @@ used for extra protection
 
 made hand public too as that was needed
 C:\Users\peter\Desktop\Kunskappskontroll-3\kunskapskontroll-3-tjugoett participant\Classes\Participant.cs(18,21): error CS0053: Inconsistent accessibility: property type 'Hand' is less accessible than property 'Participant.Hand'
+on second though we neglect that we might have errors that get solved on other teamates branches

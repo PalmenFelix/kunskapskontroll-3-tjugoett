@@ -3,7 +3,7 @@ public class CardRenderer
 {
     public string[] RenderCard(Card card)
     {
-        string rank = card.Rank.ToString();
+        string rank = GetRankSymbol(card.Rank);
 
         return new string[]
         {
@@ -17,13 +17,18 @@ public class CardRenderer
 
     private string GetSuitSymbol(Suit suit)
     {
-    return suit switch
+        return suit switch
+        {
+            Suit.Hearts => "♥",
+            Suit.Diamonds => "♦",
+            Suit.Clubs => "♣",
+            Suit.Spades => "♠",
+            _ => "?"
+        };
+    }
+
+    private string GetRankSymbol(Rank rank)
     {
-        Suit.Hearts => "♥",
-        Suit.Diamonds => "♦",
-        Suit.Clubs => "♣",
-        Suit.Spades => "♠",
-        _ => "?"
-    };
+        return rank.ToString();
     }
 }
