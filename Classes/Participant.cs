@@ -1,3 +1,4 @@
+
 public enum ParticipantType
 {
     Player,
