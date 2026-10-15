@@ -1,4 +1,4 @@
-class Hand
+public class Hand
 {
     
 }
