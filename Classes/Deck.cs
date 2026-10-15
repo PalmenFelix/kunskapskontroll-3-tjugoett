@@ -1,5 +1,5 @@
 
-class Deck
+public class Deck
 {
     private List <Card> cards = new List<Card>();
     private Random random;
