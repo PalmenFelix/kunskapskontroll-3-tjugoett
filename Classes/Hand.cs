@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class Hand
 {
     public List<Card> Cards { get; } = new List<Card>();
