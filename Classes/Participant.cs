@@ -15,7 +15,7 @@ public abstract class Participant
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException(
-                "Participant name cannot be empty.",
+                "Spelarens namn kan inte vara tom",
                 nameof(name));
 
         Name = name;
