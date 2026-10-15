@@ -1,4 +1,11 @@
-class Outcome
+public enum Outcome
 {
+    Win,
+    Lose,
+    Push,
+    Blackjack
     
+
+
+
 }
