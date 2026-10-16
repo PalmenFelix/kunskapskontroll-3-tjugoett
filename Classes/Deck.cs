@@ -1,5 +1,5 @@
 
-class Deck
+public class Deck
 {
     private List <Card> cards = new List<Card>();
     private Random random;
@@ -7,6 +7,11 @@ class Deck
     public Deck(Random random)
     {
         this.random = random;
+        BuildCards();
+
+    }
+    private void BuildCards()
+    {
         foreach (Suit suit in Enum.GetValues<Suit>())
         {
              foreach (Rank rank in Enum.GetValues<Rank>())
@@ -14,6 +19,13 @@ class Deck
                 cards.Add(new Card{Suit = suit, Rank=rank});
             }
         }
+    }
+
+    public void Reset()
+    {
+        cards.Clear();
+        BuildCards();
+        Shuffle();
     }
     public void Shuffle()
     {
@@ -27,7 +39,7 @@ class Deck
     {
         if (cards.Count == 0)
         {
-            throw new InvalidOperationException("Kortleken är tomt"); 
+            throw new InvalidOperationException("Kortleken är tom"); 
         }
         int lastIndex = cards.Count -1;
         Card card = cards[lastIndex];
