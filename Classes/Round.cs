@@ -3,13 +3,15 @@ public class Round
     public Player Player { get; }
     public Dealer Dealer { get; }
     public Deck Deck { get; }
+    public ConsoleUI ConsoleUI { get; }
     public Outcome? Result { get; private set; }
 
-    public Round(Player player, Dealer dealer, Deck deck)
+    public Round(Player player, Dealer dealer, Deck deck, ConsoleUI consoleUI)
     {
         Player = player;
         Dealer = dealer;
         Deck = deck;
+        ConsoleUI = consoleUI;
     }
 
 
@@ -41,19 +43,19 @@ public class Round
 
         while (playing && !Player.Hand.IsBust && !Player.Hand.IsBlackjack)
         {
-            string? input = // Från ConsoleUI
+            string input = ConsoleUI.GetPlayerChoice().Trim().ToLower(); // Från ConsoleUI
 
-            if (input == // Från ConsoleUI)
+            if (input == "h") // Från ConsoleUI
             {
                 PlayerHit();
             }
-            else if (input == // Från ConsoleUI)
+            else if (input == "s") // Från ConsoleUI
             {
                 playing = false;
             }
             else
             {
-                // Ogiltigt val ska frågas igen, från ConsoleUI
+                ConsoleUI.ShowMessage("Ogiltigt val. Skriv H eller S.");// Från ConsoleUI
             }
         }
     }   
