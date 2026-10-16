@@ -1,4 +1,4 @@
-class ConsoleUI
+public class ConsoleUI
 {
     public int AskNumberOfPlayers()
     {
@@ -30,4 +30,19 @@ class ConsoleUI
             }
         }
     }
+
+    public string GetPlayerChoice()
+    {
+        Console.WriteLine("H. Hit (dra kort)");
+        Console.WriteLine("S. Stand (stanna)");
+        Console.Write("Välj: ");
+
+        return Console.ReadLine() ?? "";
+    }
+
+    public void ShowMessage(string message)
+    {
+        Console.WriteLine(message);
+    }
 }
+    
