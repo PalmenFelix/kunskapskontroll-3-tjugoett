@@ -6,26 +6,27 @@ public class Round
     public List<Player> Players { get; }
     public Dealer Dealer { get; }
     public Deck Deck { get; }
-    public ConsoleUI ConsoleUI { get; }
+    public ConsoleUI UI { get; }
     public List<Outcome> Results { get; } = new List<Outcome>();
 
     public Round(List<Player> players, Dealer dealer, Deck deck, ConsoleUI consoleUI)
     {
         if (players == null)
             throw new ArgumentNullException(nameof(players));
-
+        
         if (players.Count < 1 || players.Count > 5)
             throw new ArgumentException("Det måste finnas mellan 1 och 5 spelare.", nameof(players));
 
         Players = players;
         Dealer = dealer;
         Deck = deck;
-        ConsoleUI = consoleUI;
+        UI = consoleUI;
     }
 
     // StartRound: startar rundan
     public void StartRound()
     {
+        UI.ShowMessage("DEBUG: StartRound() started");//Some debugg again to verifie
         foreach (Player player in Players)
         {
             player.Hand.Cards.Clear();
@@ -33,20 +34,25 @@ public class Round
 
         Dealer.StartNewRound();
         Results.Clear();
+        UI.ShowMessage(
+            $"Cards remaining before reset check: {Deck.GetCount()}");
 
         if (Deck.GetCount() < 15)
         {
+            UI.ShowMessage("Reshuffling deck!");
             Deck.Reset();
+            UI.ShowMessage($"Cards after reset: {Deck.GetCount()}");//to verfie we have it reseted
         }
     DealCards();
 
     foreach (Player player in Players)
         {
-    ConsoleUI.ShowPlayerHand(player);
+    UI.ShowPlayerHand(player);
     PlayerTurn(player);
         }
 
         DealerTurn();
+        UI.ShowDealerHand(Dealer);
 
         foreach (Player player in Players)
         {
@@ -68,6 +74,7 @@ public class Round
                     player.Pushes++;
                     break;
             }
+            UI.ShowMessage($"{player.Name}: {result}");
         }
     }
 
@@ -96,7 +103,7 @@ public class Round
 
         while (playing && !player.Hand.IsBust && !player.Hand.IsBlackjack)
         {
-            string input = ConsoleUI.GetPlayerChoice().Trim().ToLower();
+            string input = UI.GetPlayerChoice().Trim().ToLower();
 
             if (input == "h")
             {
@@ -108,7 +115,7 @@ public class Round
             }
             else
             {
-                ConsoleUI.ShowMessage("Ogiltigt val. Skriv H eller S.");
+                UI.ShowMessage("Ogiltigt val. Skriv H eller S.");
             }
         }
     }
@@ -116,7 +123,7 @@ public class Round
     private void PlayerHit(Player player)
     {
         player.Hand.Cards.Add(Deck.Deal());
-        ConsoleUI.ShowPlayerHand(player); //Wanna show the new card rigth
+        UI.ShowPlayerHand(player); //Wanna show the new card rigth
     }
 
     // DealerTurn: Dealerns tur

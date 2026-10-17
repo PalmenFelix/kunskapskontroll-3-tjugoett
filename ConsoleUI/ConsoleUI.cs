@@ -53,5 +53,17 @@ public void ShowPlayerHand(Player player) //Need to show our card in our hand so
     {
         Console.WriteLine(message);
     }
+    public void ShowDealerHand(Dealer dealer)
+{
+    Console.WriteLine("Givarens hand:");
+
+    foreach (Card card in dealer.Hand.Cards)
+    {
+        Console.WriteLine(card);
+    }
+
+    Console.WriteLine($"Total: {dealer.Hand.Value}");
 }
+}
+
     
