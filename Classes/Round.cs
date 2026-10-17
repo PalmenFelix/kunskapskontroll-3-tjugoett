@@ -38,12 +38,12 @@ public class Round
         {
             Deck.Reset();
         }
+    DealCards();
 
-        DealCards();
-
-        foreach (Player player in Players)
+    foreach (Player player in Players)
         {
-            PlayerTurn(player);
+    ConsoleUI.ShowPlayerHand(player);
+    PlayerTurn(player);
         }
 
         DealerTurn();
@@ -116,6 +116,7 @@ public class Round
     private void PlayerHit(Player player)
     {
         player.Hand.Cards.Add(Deck.Deal());
+        ConsoleUI.ShowPlayerHand(player); //Wanna show the new card rigth
     }
 
     // DealerTurn: Dealerns tur

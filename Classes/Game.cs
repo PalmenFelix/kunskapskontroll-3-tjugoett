@@ -3,37 +3,72 @@ class Game
     Random random = new Random();
     private Menu menu = new Menu();
     private ConsoleUI ui = new ConsoleUI();
+
+    private GameStorage storage = new GameStorage();// neeed to call  on the method from gamestorage
     private List<Player> players = new();
+    private List<Player> selectedPlayers = new List<Player>(); // a list of the selected players in the game
     public void SetUpPlayers()
     {
+        selectedPlayers.Clear(); // 8. need to clear the selected players before joining a new game 
+        // otherwise it add the same players.
         int number = ui.AskNumberOfPlayers();
         for (int i = 1; i <= number; i++)
         {
             string name = ui.AskPlayerName(i);
-            Player player = new Player(name);
+            //Player player = new Player(name); would create another player , even tho im currently the same player so my stats would zero.
+            //So  the load wouldn't get to load anything
+            Player? player = players.FirstOrDefault(
+            p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        
+
+    if (player == null) // 6 . an existing player isnt added to players again
+        {
+            player = new Player(name);
             players.Add(player);
         }
+        
+        selectedPlayers.Add(player);
+        Console.WriteLine($"DEBUG: Selected players = {selectedPlayers.Count}");
+        }
     }
-    public void Start()
+public void Start()
     {
+        players = storage.Load();
+
+if (!string.IsNullOrEmpty(storage.ErrorMessage))
+        {
+            ui.ShowMessage(storage.ErrorMessage);
+        }            //players = storage.Load(); // Needs to have a Load method that stores the data to storage 
+                    //ui.ShowMessage(storage.ErrorMessage);
         bool running = true;
+        
         while (running)
         {
             switch (menu.ShowMenu())
             {
-            case 1: PlayGame(); break;
-            case 2: running = false; break; 
+                case 1:
+                    PlayGame(); 
+                    break;
+                case 2: 
+                    running = false; 
+                    break; 
             }
         }
     }
-    private void PlayGame()
+private void PlayGame()
     {
         SetUpPlayers();
         Deck deck = new Deck(random);
         deck.Shuffle();
         Dealer dealer = new Dealer();
-        Round round = new Round(players, dealer, deck, ui);
+        //Round round = new Round(players, dealer, deck, ui); contains all saved profiles, 
+        // whereas selectedPlayers contains only the players chosen for this game.
+        Round round = new Round(selectedPlayers, dealer, deck, ui);
         round.StartRound();
+    if (!storage.Save(players))
+        {
+            ui.ShowMessage(storage.ErrorMessage);
+        }
     }
 }
 

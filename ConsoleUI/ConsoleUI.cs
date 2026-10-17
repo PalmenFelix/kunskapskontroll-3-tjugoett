@@ -39,7 +39,16 @@ public class ConsoleUI
 
         return Console.ReadLine() ?? "";
     }
+public void ShowPlayerHand(Player player) //Need to show our card in our hand so we know if hit or stand is the correct way 
+    {
+    Console.WriteLine($"{player.Name}'s hand:");
 
+    foreach (Card card in player.Hand.Cards)
+        {
+            Console.WriteLine(card);
+        }
+        Console.WriteLine($"Total: {player.Hand.Value}"); // Yeah added the sum of all the card value
+    }
     public void ShowMessage(string message)
     {
         Console.WriteLine(message);
