@@ -41,7 +41,7 @@ public class Card
         }
     }
 
-//public override string ToString() // We wanna display the cards also otherwise our Ui would write anything
+//public override string ToString() // We wanna display the cards also otherwise our Ui wouldn't write anything
     // {
     // return $"{Rank} of {Suit}";
     // }
@@ -65,6 +65,6 @@ public class Card
         _ => Rank.ToString()
     };
 
-    return $"{rankName} of {Suit} ({Value})";
+    return $"{rankName} of {Suit} ({Value})"; // would make em show the value also. Espicially for the ace scneario it would be good 
 }
 }

@@ -26,7 +26,7 @@ public class Round
     // StartRound: startar rundan
     public void StartRound()
     {
-        UI.ShowMessage("DEBUG: StartRound() started");//Some debugg again to verifie
+        UI.ShowMessage("DEBUG: StartRound() started");//Some debugg again to verify
         foreach (Player player in Players)
         {
             player.Hand.Cards.Clear();
@@ -41,7 +41,7 @@ public class Round
         {
             UI.ShowMessage("Reshuffling deck!");
             Deck.Reset();
-            UI.ShowMessage($"Cards after reset: {Deck.GetCount()}");//to verfie we have it reseted
+            UI.ShowMessage($"Cards after reset: {Deck.GetCount()}");//to verify we have it reseted
         }
     DealCards();
 
@@ -52,7 +52,7 @@ public class Round
         }
 
         DealerTurn();
-        UI.ShowDealerHand(Dealer);
+        UI.ShowDealerHand(Dealer); // need the UI to get the dealer cards
 
         foreach (Player player in Players)
         {

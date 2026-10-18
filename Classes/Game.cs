@@ -72,19 +72,19 @@ if (!string.IsNullOrEmpty(storage.ErrorMessage))
 //     }
 
 private void PlayGame()
-{
+    {
     SetUpPlayers();
 
-    Deck deck = new Deck(random);
-    deck.Shuffle();
+        Deck deck = new Deck(random);
+        deck.Shuffle();
 
-    Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer();
 
     // Keep playing rounds until the player chooses to stop.
     bool playing = true;
 
     while (playing)
-    {
+        {
         Round round = new Round(selectedPlayers, dealer, deck, UI);
         round.StartRound();
 
@@ -95,12 +95,12 @@ private void PlayGame()
         {
             playing = false;
         }
-    }
+        }
 
     if (!storage.Save(players))
-    {
+        {
         UI.ShowMessage(storage.ErrorMessage);
+        }
     }
-}
 }
 
