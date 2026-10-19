@@ -19,16 +19,32 @@ public class CardRenderer
     {
         return suit switch
         {
-            Suit.Hearts => "♥",
+            Suit.Hearts => "💓", 
             Suit.Diamonds => "♦",
-            Suit.Clubs => "♣",
+            Suit.Clubs => "🍀",
             Suit.Spades => "♠",
             _ => "?"
         };
     }
-
     private string GetRankSymbol(Rank rank)
     {
-        return rank.ToString();
+        return rank switch
+        {
+            Rank.Ace => "A",
+            Rank.Two => "2",
+            Rank.Three => "3",
+            Rank.Four => "4",
+            Rank.Five => "5",
+            Rank.Six => "6",
+            Rank.Seven => "7",
+            Rank.Eight => "8",
+            Rank.Nine => "9",
+            Rank.Ten => "10",
+            Rank.Jack => "J",
+            Rank.Queen => "Q",
+            Rank.King => "K",
+            _ => "?"
+        };
     }
 }
+ 
