@@ -45,9 +45,7 @@ public class Card
     // {
     // return $"{Rank} of {Suit}";
     // }
-    public override string ToString()
-{
-    string rankName = Rank switch
+    public string RankName => Rank switch
     {
         Rank.two => "2",
         Rank.three => "3",
@@ -65,6 +63,7 @@ public class Card
         _ => Rank.ToString()
     };
 
-    return $"{rankName} of {Suit} ({Value})"; // would make em show the value also. Espicially for the ace scneario it would be good 
-}
+    public override string ToString() => ToString(Value);
+
+    public string ToString(int shownValue) => $"{RankName} of {Suit} ({shownValue})";
 }

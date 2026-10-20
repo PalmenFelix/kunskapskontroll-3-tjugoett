@@ -118,6 +118,10 @@ public class Round
                 UI.ShowMessage("Ogiltigt val. Skriv H eller S.");
             }
         }
+        if (player.Hand.IsBust)
+        {
+            UI.ShowMessage($"{player.Name} blev tjock!");
+        }
     }
 
     private void PlayerHit(Player player)
@@ -134,6 +138,10 @@ public class Round
         while (Dealer.ShouldHit() && !Dealer.Hand.IsBust)
         {
             Dealer.Hand.Cards.Add(Deck.Deal());
+        }
+        if (Dealer.Hand.IsBust)
+        {
+            UI.ShowMessage($"{Dealer.Name} blev tjock!");
         }
     }
 

@@ -55,5 +55,24 @@ public class Hand
         return aces > 0;
     }
 }
-                    
+public int AcesCountedAsOne
+    {
+        get
+        {
+            int value = 0;
+            int aces = 0;
+            foreach (var card in Cards)
+            {
+                value += card.Value;
+                if (card.Rank == Rank.ace) aces++;
+            }
+            int lowered = 0;
+            while(value > 21 && lowered < aces)
+            {
+                value -= 10;
+                lowered++;
+            }
+            return lowered;
+        }
+    }
 }
