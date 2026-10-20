@@ -112,4 +112,13 @@ public class ConsoleUI
     {
         Console.WriteLine(message);
     }
+    public void ShowBlackjackMessage(Player player)
+    {
+        Console.WriteLine($"{player.Name} fick blackjack");
+    }
+
+    public void ShowDealerBlackjackMessage()
+    {
+        Console.WriteLine($"Dealern har blackjack :(");
+    }
 }
