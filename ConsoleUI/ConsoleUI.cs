@@ -38,6 +38,26 @@ public class ConsoleUI
         }
     }
 
+    public int PickYourFighter(int number)
+    {
+        while (true)
+        {
+            Console.WriteLine($"Spelare {number}:");
+            Console.WriteLine("1. Människa");
+            Console.WriteLine("2. Dator (enkel)");
+            Console.WriteLine("3. Dator (proffs)");
+
+            if (int.TryParse(Console.ReadLine(), out int choice)
+                && choice >= 1
+                && choice <= 3)
+            {
+                return choice;
+            }
+
+            Console.WriteLine("Skriv 1, 2 eller 3");
+        }
+    }
+
     public string GetPlayerChoice()
     {
         Console.WriteLine("H. Hit (dra kort)");
