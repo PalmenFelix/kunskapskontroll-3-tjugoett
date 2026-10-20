@@ -41,10 +41,7 @@ public class Card
         }
     }
 
-//public override string ToString() // We wanna display the cards also otherwise our Ui wouldn't write anything
-    // {
-    // return $"{Rank} of {Suit}";
-    // }
+
     public string RankName => Rank switch
     {
         Rank.two => "2",
