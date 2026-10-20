@@ -26,7 +26,6 @@ public class Round
     // StartRound: startar rundan
     public void StartRound()
     {
-        UI.ShowMessage("DEBUG: StartRound() started");//Some debugg again to verify
         foreach (Player player in Players)
         {
             player.Hand.Cards.Clear();

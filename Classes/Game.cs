@@ -28,7 +28,6 @@ class Game
         }
         
         selectedPlayers.Add(player);
-        Console.WriteLine($"DEBUG: Selected players = {selectedPlayers.Count}");
         }
     }
 public void Start()
