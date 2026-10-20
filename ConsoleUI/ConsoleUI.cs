@@ -44,5 +44,26 @@ public class ConsoleUI
     {
         Console.WriteLine(message);
     }
+
+    public void ShowChips(Player player)
+    {
+        Console.WriteLine($"{player.Name} har {player.Chips.Balance} marker.");
+    }
+
+    public int AskBet(Player player)
+    {
+        while (true)
+        {
+            Console.WriteLine($"Hur mycket vill du satsa? (1 - {player.Chips.Balance}): ");
+            if (int.TryParse(Console.ReadLine(), out int bet) && bet > 0 && bet <= player.Chips.Balance)
+            {
+                return bet;
+            }
+            else
+            {
+                Console.WriteLine("Ogiltlig satsning");
+            }
+        }
+    }
 }
     

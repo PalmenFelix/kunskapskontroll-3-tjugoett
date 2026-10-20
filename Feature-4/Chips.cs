@@ -2,18 +2,26 @@ public class Chips
 {
     private int Amount = 1000;
 
-    public bool AmountIsPositive()
+    public int Balance => Amount;
+
+    public bool AddChips(int amount)
     {
-        return Amount > 0;
+        if (amount > 0)
+        {
+            Amount += amount;
+            return true;
+        }
+
+        return false;
     }
 
-    public void AddChips(int amount)
+    public bool RemoveChips(int amount)
     {
-        Amount += amount;
-    }
-
-    public void RemoveChips(int amount)
-    {
-        Amount -= amount;
+        if (amount > 0 && Amount >= amount)
+        {
+            Amount -= amount;
+            return true;
+        }
+        return false;
     }
 }

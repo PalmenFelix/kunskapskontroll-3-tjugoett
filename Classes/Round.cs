@@ -165,4 +165,19 @@ public class Round
             return Outcome.Push;
         }
     }
+
+    // Feature-4: Betting chips
+
+    public void PlaceBets()
+    {
+
+        foreach (Player player in Players)
+        {
+            ConsoleUI.ShowChips(player);
+
+            int bet = ConsoleUI.AskBet(player);
+
+            player.Chips.RemoveChips(bet);
+        }
+    }
 }
