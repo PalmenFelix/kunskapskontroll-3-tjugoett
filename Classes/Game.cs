@@ -15,8 +15,7 @@ class Game
         for (int i = 1; i <= number; i++)
         {
             string name =UI.AskPlayerName(i);
-            //Player player = new Player(name); would create another player , even tho im currently the same player so my stats would zero.
-            //So  the load wouldn't get to load anything
+            
             Player? player = players.FirstOrDefault(
             p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         
@@ -37,8 +36,7 @@ public void Start()
 if (!string.IsNullOrEmpty(storage.ErrorMessage))
         {
             UI.ShowMessage(storage.ErrorMessage);
-        }            //players = storage.Load(); // Needs to have a Load method that stores the data to storage 
-                    //ui.ShowMessage(storage.ErrorMessage);
+        }            
         bool running = true;
         
         while (running)
@@ -54,21 +52,6 @@ if (!string.IsNullOrEmpty(storage.ErrorMessage))
             }
         }
     }
-// private void PlayGame()
-//     {
-//         SetUpPlayers();
-//         Deck deck = new Deck(random);
-//         deck.Shuffle();
-//         Dealer dealer = new Dealer();
-//         //Round round = new Round(players, dealer, deck, ui); contains all saved profiles, 
-//         // whereas selectedPlayers contains only the players chosen for this game.
-//         Round round = new Round(selectedPlayers, dealer, deck, ui);
-//         round.StartRound();
-//     if (!storage.Save(players))
-//         {
-//             ui.ShowMessage(storage.ErrorMessage);
-//         }
-//     }
 
 private void PlayGame()
     {
