@@ -112,3 +112,4 @@ public class ConsoleUI
     {
         Console.WriteLine(message);
     }
+}
