@@ -59,10 +59,9 @@ public class ConsoleUI
             {
                 return bet;
             }
-            else
-            {
-                Console.WriteLine("Ogiltlig satsning");
-            }
+            
+            Console.WriteLine("Ogiltlig satsning");
+    
         }
     }
 }

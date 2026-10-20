@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 public class Round
 {
@@ -8,6 +9,7 @@ public class Round
     public Deck Deck { get; }
     public ConsoleUI ConsoleUI { get; }
     public List<Outcome> Results { get; } = new List<Outcome>();
+    public Dictionary<Player, int> Bets { get; } = new();
 
     public Round(List<Player> players, Dealer dealer, Deck deck, ConsoleUI consoleUI)
     {
@@ -38,6 +40,8 @@ public class Round
         {
             Deck.Reset();
         }
+
+        PlaceBets();
 
         DealCards();
 
@@ -170,6 +174,7 @@ public class Round
 
     public void PlaceBets()
     {
+        Bets.Clear();
 
         foreach (Player player in Players)
         {
@@ -177,7 +182,32 @@ public class Round
 
             int bet = ConsoleUI.AskBet(player);
 
-            player.Chips.RemoveChips(bet);
+            if (player.Chips.RemoveChips(bet))
+            {
+                Bets[player] = bet; 
+            }
+        }
+    }
+
+    public void PayOut(Player player, Outcome result)
+    {
+        int bet = Bets[player];
+        
+        if (result == Outcome.Lose)
+        {
+            // ?
+        }
+        else if (result == Outcome.Win)
+        {
+            player.Chips.AddChips(bet * 2);
+        }
+        else if (result == Outcome.Push)
+        {
+            player.Chips.AddChips(bet);
+        }
+        else if (result == Outcome.Blackjack)
+        {
+            player.Chips.AddChips();
         }
     }
 }
