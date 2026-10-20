@@ -39,10 +39,47 @@ public class ConsoleUI
 
         return Console.ReadLine() ?? "";
     }
+public void ShowPlayerHand(Player player) //Need to show our card in our hand so we know if hit or stand is the correct way 
+    {
+    Console.WriteLine($"{player.Name}'s hand:");
 
+        int acesAsOne = player.Hand.AcesCountedAsOne;
+
+    foreach (Card card in player.Hand.Cards)
+    {
+        int shown = card.Value;
+        if (card.Rank == Rank.ace && acesAsOne > 0)
+        {
+            shown = 1;
+            acesAsOne--;
+        }
+        Console.WriteLine(card.ToString(shown));
+    }
+        Console.WriteLine($"Total: {player.Hand.Value}"); // Yeah added the sum of all the card value
+    }
     public void ShowMessage(string message)
     {
         Console.WriteLine(message);
     }
+    public void ShowDealerHand(Dealer dealer)
+{
+    Console.WriteLine("Givarens hand:");
+
+    int acesAsOne = dealer.Hand.AcesCountedAsOne;
+
+    foreach (Card card in dealer.Hand.Cards)
+    {
+        int shown = card.Value;
+        if (card.Rank == Rank.ace && acesAsOne > 0)
+        {
+            shown = 1;
+            acesAsOne--;
+        }
+        Console.WriteLine(card.ToString(shown));
+    }
+
+    Console.WriteLine($"Total: {dealer.Hand.Value}");
 }
+}
+
     
