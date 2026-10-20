@@ -46,8 +46,9 @@ public class Round
 
     foreach (Player player in Players)
         {
-    UI.ShowPlayerHand(player);
-    PlayerTurn(player);
+            UI.ShowDealerHand(Dealer);
+            UI.ShowPlayerHand(player);
+            PlayerTurn(player);
         }
 
         DealerTurn();
