@@ -1,25 +1,32 @@
+
+using System;
+
 public class ConsoleUI
 {
     public int AskNumberOfPlayers()
     {
-        while(true)
+        while (true)
         {
             Console.WriteLine("Hur många spelare? (1-5)");
-            if (int.TryParse(Console.ReadLine(), out int numberOfPlayers) 
-            && numberOfPlayers >= 1 && numberOfPlayers <= 5)
+
+            if (int.TryParse(Console.ReadLine(), out int numberOfPlayers)
+                && numberOfPlayers >= 1
+                && numberOfPlayers <= 5)
             {
                 return numberOfPlayers;
             }
-            Console.WriteLine("Skriv in ett nummer mellan 1 och 5");
 
+            Console.WriteLine("Skriv in ett nummer mellan 1 och 5");
         }
     }
+
     public string AskPlayerName(int number)
     {
         while (true)
         {
             Console.WriteLine($"Döp spelare {number}:");
             string? playerName = Console.ReadLine();
+
             if (string.IsNullOrWhiteSpace(playerName))
             {
                 Console.WriteLine("Spelarens namn får inte vara tomt");
@@ -39,47 +46,70 @@ public class ConsoleUI
 
         return Console.ReadLine() ?? "";
     }
-public void ShowPlayerHand(Player player) //Need to show our card in our hand so we know if hit or stand is the correct way 
+
+    public void ShowPlayerHand(Player player)
     {
-    Console.WriteLine($"{player.Name}'s hand:");
+        Console.WriteLine($"{player.Name}'s hand:");
 
         int acesAsOne = player.Hand.AcesCountedAsOne;
 
-    foreach (Card card in player.Hand.Cards)
-    {
-        int shown = card.Value;
-        if (card.Rank == Rank.ace && acesAsOne > 0)
+        foreach (Card card in player.Hand.Cards)
         {
-            shown = 1;
-            acesAsOne--;
+            int shown = card.Value;
+
+            if (card.Rank == Rank.ace && acesAsOne > 0)
+            {
+                shown = 1;
+                acesAsOne--;
+            }
+
+            Console.WriteLine(card.ToString(shown));
         }
-        Console.WriteLine(card.ToString(shown));
+
+        Console.WriteLine($"Total: {player.Hand.Value}");
     }
-        Console.WriteLine($"Total: {player.Hand.Value}"); // Yeah added the sum of all the card value
+
+    public void ShowDealerHand(Dealer dealer)
+    {
+        Console.WriteLine("Givarens hand:");
+
+        int acesAsOne = dealer.Hand.AcesCountedAsOne;
+
+        for (int i = 0; i < dealer.Hand.Cards.Count; i++)
+        {
+            // Hide the dealer's second card until it is revealed.
+            if (i == 1 && !dealer.HoleCardRevealed)
+            {
+                Console.WriteLine("[Dolt kort]");
+                continue;
+            }
+
+            Card card = dealer.Hand.Cards[i];
+            int shown = card.Value;
+
+            if (card.Rank == Rank.ace && acesAsOne > 0)
+            {
+                shown = 1;
+                acesAsOne--;
+            }
+
+            Console.WriteLine(card.ToString(shown));
+        }
+
+        // Do not reveal the dealer's total while the hole card is hidden.
+        if (dealer.HoleCardRevealed)
+        {
+            Console.WriteLine($"Total: {dealer.Hand.Value}");
+        }
+        else if (dealer.Hand.Cards.Count > 0)
+        {
+            Console.WriteLine(
+                $"Synligt värde: {dealer.Hand.Cards[0].Value}");
+        }
     }
+
     public void ShowMessage(string message)
     {
         Console.WriteLine(message);
     }
-    public void ShowDealerHand(Dealer dealer)
-{
-    Console.WriteLine("Givarens hand:");
-
-    int acesAsOne = dealer.Hand.AcesCountedAsOne;
-
-    foreach (Card card in dealer.Hand.Cards)
-    {
-        int shown = card.Value;
-        if (card.Rank == Rank.ace && acesAsOne > 0)
-        {
-            shown = 1;
-            acesAsOne--;
-        }
-        Console.WriteLine(card.ToString(shown));
-    }
-
-    Console.WriteLine($"Total: {dealer.Hand.Value}");
 }
-}
-
-    
