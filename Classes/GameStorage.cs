@@ -87,7 +87,8 @@ public class GameStorage
                     string.IsNullOrWhiteSpace(data.Name) ||
                     data.Wins < 0 ||
                     data.Losses < 0 ||
-                    data.Pushes < 0)
+                    data.Pushes < 0 ||
+                    data.Chips < 0)
                 {
                     ErrorMessage =
                         "Sparfilen innehåller felaktiga spelaruppgifter.";
@@ -104,6 +105,7 @@ public class GameStorage
                 player.Losses = data.Losses;
                 player.Pushes = data.Pushes;
 
+                player.Chips.SaveChips(data.Chips);
                 players.Add(player);
             }
 

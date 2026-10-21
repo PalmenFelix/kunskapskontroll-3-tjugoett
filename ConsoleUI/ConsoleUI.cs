@@ -122,15 +122,19 @@ public class ConsoleUI
     {
         while (true)
         {
-            Console.WriteLine($"Hur mycket vill du satsa? (1 - {player.Chips.Balance}): ");
-            if (int.TryParse(Console.ReadLine(), out int bet) && bet > 0 && bet <= player.Chips.Balance)
+        Console.WriteLine($"Hur mycket vill du satsa? (50 - {player.Chips.Balance}): ");
+
+        if (int.TryParse(Console.ReadLine(), out int bet) && bet >= 50 && bet <= player.Chips.Balance)
             {
                 return bet;
             }
-            
+
             Console.WriteLine("Ogiltlig satsning");
         }
     }
+
+    
+
     public void ShowBlackjackMessage(Player player)
     {
         Console.WriteLine($"{player.Name} fick blackjack");

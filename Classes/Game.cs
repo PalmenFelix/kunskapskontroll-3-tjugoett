@@ -1,3 +1,5 @@
+using System.Linq;
+
 class Game
 {
     Random random = new Random();
@@ -16,8 +18,7 @@ class Game
         {
             string name =UI.AskPlayerName(i);
             
-            Player? player = players.FirstOrDefault(
-            p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            Player? player = players.FirstOrDefault(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
         if (player != null && selectedPlayers.Contains(player))
          {
@@ -32,13 +33,17 @@ class Game
             player = new Player(name);
             players.Add(player);
         }
+        else if (player.Chips.Balance == 0)
+        {
+            player.Chips.SaveChips(1000);
+        }
         
         selectedPlayers.Add(player);
         }
     }
 public void Start()
     {
-        players = storage.Load();
+        players = storage.Load();   
 
 if (!string.IsNullOrEmpty(storage.ErrorMessage))
         {

@@ -22,7 +22,11 @@ Insatsen får inte vara större än spelarens marker, och inte noll
 11. Payout metod fixad i Round.cs
 12. Nu tas spelare utan marker bort och det meddelar när alla spelare har slut, ligger tidigt i Round.cs och PlayerRemoved meddelande i ConsoleUI.
 13. Game.cs redigerat vid rad 80, så att round inte kan köras om det inte finns några tillgängliga spelare.
-14. SaveChips metod tillagd i Chips.cs. Chips och data.Chips tillagd i GameStorage.cs också
+14. Lade till SaveChips() i Chips.cs och stöd för spelarens marker i PlayerData och GameStorage.cs.
+15. Uppdaterade sparning och laddning så att spelarens marker ingår i spelaruppgifterna.
+16. Uppdaterade SetUpPlayers() så att en befintlig spelare kan väljas igen utan att en dubblett skapas. 
+17. (DESIGNVAL) En spelare som får slut på marker lämnar bordet och kan inte vara med i fler rundor under samma spelsession. Om en spelare som har förlorat alla sina marker får 1000 marker igen om en ny spelsession körs. Spelare som fortfarande har marker kvar behåller sitt sparade saldo mellan olika spelsessions och programkörningar.
+18. Minsta bet ändras till 50
 
 
 
