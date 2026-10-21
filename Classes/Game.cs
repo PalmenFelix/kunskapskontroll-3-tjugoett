@@ -3,6 +3,8 @@ class Game
     Random random = new Random();
     private Menu menu = new Menu();
     private ConsoleUI UI = new ConsoleUI();
+    private RuleSetReader ruleSetReader = new RuleSetReader();
+    private RuleSet rules = new RuleSet();
 
     private GameStorage storage = new GameStorage();// neeed to call  on the method from gamestorage
     private List<Player> players = new();
@@ -32,6 +34,13 @@ class Game
 public void Start()
     {
         players = storage.Load();
+        rules = ruleSetReader.Load();
+
+        foreach (string warning in ruleSetReader.Warnings)
+        {
+            UI.ShowMessage(warning);
+        }
+        UI.ShowRules(rules);
 
 if (!string.IsNullOrEmpty(storage.ErrorMessage))
         {
