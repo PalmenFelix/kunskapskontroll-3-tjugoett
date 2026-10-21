@@ -69,7 +69,7 @@ private void PlayGame()
         Deck deck = new Deck(random);
         deck.Shuffle();
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(rules.DealerHitsSoft17);
 
     // Keep playing rounds until the player chooses to stop.
     bool playing = true;
