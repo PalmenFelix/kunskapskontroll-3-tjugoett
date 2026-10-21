@@ -41,4 +41,26 @@ public class Card
         }
     }
 
+
+    public string RankName => Rank switch
+    {
+        Rank.two => "2",
+        Rank.three => "3",
+        Rank.four => "4",
+        Rank.five => "5",
+        Rank.six => "6",
+        Rank.seven => "7",
+        Rank.eight => "8",
+        Rank.nine => "9",
+        Rank.ten => "10",
+        Rank.jack => "Jack",
+        Rank.queen => "Queen",
+        Rank.king => "King",
+        Rank.ace => "Ace",
+        _ => Rank.ToString()
+    };
+
+    public override string ToString() => ToString(Value);
+
+    public string ToString(int shownValue) => $"{RankName} of {Suit} ({shownValue})";
 }
