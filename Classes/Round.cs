@@ -48,12 +48,21 @@ public class Round
         {
             UI.ShowDealerHand(Dealer);
             UI.ShowPlayerHand(player);
+
+            if (player.Hand.IsBlackjack)
+            {
+                UI.ShowBlackjackMessage(player);
+            }
+
             PlayerTurn(player);
         }
 
         DealerTurn();
         UI.ShowDealerHand(Dealer); // need the UI to get the dealer cards
-
+        if (Dealer.Hand.IsBlackjack)
+        {
+            UI.ShowDealerBlackjackMessage();
+        }
         foreach (Player player in Players)
         {
             Outcome result = CheckWinner(player);
