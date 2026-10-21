@@ -124,6 +124,6 @@ public class ConsoleUI
         Console.WriteLine(rules.NaturalBeatsMultiCard21
             ? "- Naturlig 21 slår 21 med tre eller fler kort"
             : "- Naturlig 21 mot 21 med tre eller fler kort blir lika");
-        Console.ReadLine();
+        Console.WriteLine();
     }
 }
