@@ -18,6 +18,13 @@ class Game
             
             Player? player = players.FirstOrDefault(
             p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+        if (player != null && selectedPlayers.Contains(player))
+         {
+            UI.ShowMessage("Den spelaren är redan med. Välj ett annat namn.");
+            i--;
+            continue;
+         }
         
 
     if (player == null) // 6 . an existing player isnt added to players again
