@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
+using System.Linq;
 
 public class Round
 {
@@ -28,6 +29,21 @@ public class Round
     // StartRound: startar rundan
     public void StartRound()
     {
+        foreach (Player player in Players.ToList())
+        {
+            if (player.Chips.Balance <= 0)
+                {
+                    UI.PlayerRemoved(player);
+                    Players.Remove(player);
+                }       
+        }
+
+        if (Players.Count == 0)
+            {
+                UI.ShowMessage("Alla spelare har slut på marker. Spelet avslutas.");
+                return;
+            }
+        
         foreach (Player player in Players)
         {
             player.Hand.Cards.Clear();
@@ -72,6 +88,7 @@ public class Round
         {
             Outcome result = CheckWinner(player);
             Results.Add(result);
+            PayOut(player, result);
 
             switch (result)
             {
@@ -219,11 +236,7 @@ public class Round
     {
         int bet = Bets[player];
         
-        if (result == Outcome.Lose)
-        {
-            // ?
-        }
-        else if (result == Outcome.Win)
+        if (result == Outcome.Win)
         {
             player.Chips.AddChips(bet * 2);
         }
@@ -233,7 +246,7 @@ public class Round
         }
         else if (result == Outcome.Blackjack)
         {
-            // AddChips
+            player.Chips.AddChips(bet + (bet * 3 / 2));
         }
     }
 }

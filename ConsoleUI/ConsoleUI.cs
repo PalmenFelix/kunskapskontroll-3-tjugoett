@@ -140,4 +140,9 @@ public class ConsoleUI
     {
         Console.WriteLine($"Dealern har blackjack :(");
     }
+
+    public void PlayerRemoved(Player player)
+    {
+        Console.WriteLine($"{player.Name} har slut på marker och lämnar bordet");
+    }
 }

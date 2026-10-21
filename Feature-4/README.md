@@ -11,13 +11,16 @@ Insatsen får inte vara större än spelarens marker, och inte noll
 ## Dokumentation
 1. Skapa chips klass
 2. Funktioner i Chips, AddChips, RemoveChips
-3. GetChips i Player.cs
+3. New chips i Player.cs från GetChips
 4. Placebets i Round.cs
 5. ShowChips i ConsoleUI
 6. AskBet i ConsoleUI
 7. ShowChips och AskBet i Round.cs
 8. Dicitionry av players och bets tillagd i Round
 9. If-sats tillagd i PlaceBets i Round
+10. Payout resultat tillagd i Round.cs rad 75
+11. Payout metod fixad i Round.cs
+12. Nu tas spelare utan marker bort och det meddelar när alla spelare har slut, ligger tidigt i Round.cs och PlayerRemoved meddelande i ConsoleUI.
 
 
 
