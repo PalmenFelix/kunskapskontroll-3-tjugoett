@@ -73,7 +73,7 @@ private void PlayGame()
     {
     SetUpPlayers();
 
-        Deck deck = new Deck(random);
+        Deck deck = new Deck(random, rules.NumberOfDecks);
         deck.Shuffle();
 
         Dealer dealer = new Dealer(rules.DealerHitsSoft17);

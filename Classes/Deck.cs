@@ -3,20 +3,24 @@ public class Deck
 {
     private List <Card> cards = new List<Card>();
     private Random random;
+    private readonly int numberOfDecks;
 
-    public Deck(Random random)
+    public Deck(Random random, int numberOfDecks)
     {
         this.random = random;
+        this.numberOfDecks = numberOfDecks;
         BuildCards();
-
     }
     private void BuildCards()
     {
-        foreach (Suit suit in Enum.GetValues<Suit>())
+        for (int i = 0; i < numberOfDecks; i++)
         {
-             foreach (Rank rank in Enum.GetValues<Rank>())
+             foreach (Suit suit in Enum.GetValues<Suit>())
             {
-                cards.Add(new Card{Suit = suit, Rank=rank});
+                foreach (Rank rank in Enum.GetValues<Rank>())
+                {
+                    cards.Add(new Card{Suit = suit, Rank=rank});
+                }
             }
         }
     }
