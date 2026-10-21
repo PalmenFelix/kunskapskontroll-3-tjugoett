@@ -7,9 +7,10 @@ public class Round
     public Dealer Dealer { get; }
     public Deck Deck { get; }
     public ConsoleUI UI { get; }
+    public RuleSet Rules { get; }
     public List<Outcome> Results { get; } = new List<Outcome>();
 
-    public Round(List<Player> players, Dealer dealer, Deck deck, ConsoleUI consoleUI)
+    public Round(List<Player> players, Dealer dealer, Deck deck, ConsoleUI consoleUI, RuleSet rules)
     {
         if (players == null)
             throw new ArgumentNullException(nameof(players));
@@ -21,6 +22,7 @@ public class Round
         Dealer = dealer;
         Deck = deck;
         UI = consoleUI;
+        Rules = rules;
     }
 
     // StartRound: startar rundan
@@ -36,7 +38,7 @@ public class Round
         UI.ShowMessage(
             $"Cards remaining before reset check: {Deck.GetCount()}");
 
-        if (Deck.GetCount() < 15)
+        if (Deck.GetCount() < Rules.ReshuffleThreshold)
         {
             UI.ShowMessage("Reshuffling deck!");
             Deck.Reset();

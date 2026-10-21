@@ -83,7 +83,7 @@ private void PlayGame()
 
     while (playing)
         {
-        Round round = new Round(selectedPlayers, dealer, deck, UI);
+        Round round = new Round(selectedPlayers, dealer, deck, UI, rules);
         round.StartRound();
 
         UI.ShowMessage("Vill du spela en runda till? (j/n)");
