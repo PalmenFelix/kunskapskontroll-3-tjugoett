@@ -171,6 +171,10 @@ public class Round
         {
             return Outcome.Push;
         }
+        else if (!Rules.NaturalBeatsMultiCard21 && player.Hand.Value == 21 && Dealer.Hand.Value == 21)
+        {
+            return Outcome.Push;
+        }
         else if (player.Hand.IsBlackjack)
         {
             return Outcome.Blackjack;
