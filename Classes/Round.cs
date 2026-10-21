@@ -34,7 +34,7 @@ public class Round
         Dealer.StartNewRound();
         Results.Clear();
         UI.ShowMessage(
-            $"Cards remaining before reset check: {Deck.GetCount()}");
+            $"Cards remaining before reset check: {Deck.GetCount()}"); //Should be in UI. checking with teamates later on
 
         if (Deck.GetCount() < 15)
         {
