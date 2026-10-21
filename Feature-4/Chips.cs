@@ -24,4 +24,12 @@ public class Chips
         }
         return false;
     }
+
+    public void SaveChips(int amount)
+{
+    if (amount >= 0)
+    {
+        Amount = amount;
+    }
+}
 }

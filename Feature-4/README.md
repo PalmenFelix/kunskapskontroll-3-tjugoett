@@ -21,6 +21,8 @@ Insatsen får inte vara större än spelarens marker, och inte noll
 10. Payout resultat tillagd i Round.cs rad 75
 11. Payout metod fixad i Round.cs
 12. Nu tas spelare utan marker bort och det meddelar när alla spelare har slut, ligger tidigt i Round.cs och PlayerRemoved meddelande i ConsoleUI.
+13. Game.cs redigerat vid rad 80, så att round inte kan köras om det inte finns några tillgängliga spelare.
+14. SaveChips metod tillagd i Chips.cs. Chips och data.Chips tillagd i GameStorage.cs också
 
 
 

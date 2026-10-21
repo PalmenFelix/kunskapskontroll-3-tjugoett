@@ -9,6 +9,7 @@ public class PlayerData
     public int Wins { get; set; }
     public int Losses { get; set; }
     public int Pushes { get; set; }
+    public int Chips { get; set; }
 }
 
 public class GameStorage
@@ -31,6 +32,7 @@ public class GameStorage
             data.Wins = player.Wins;
             data.Losses = player.Losses;
             data.Pushes = player.Pushes;
+            data.Chips = player.Chips.Balance;
 
             savedPlayers.Add(data);
         }

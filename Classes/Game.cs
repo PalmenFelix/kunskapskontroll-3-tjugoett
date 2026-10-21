@@ -77,6 +77,12 @@ private void PlayGame()
         Round round = new Round(selectedPlayers, dealer, deck, UI);
         round.StartRound();
 
+        if (selectedPlayers.Count == 0)
+        {
+            playing = false;
+            break;
+        } 
+
         UI.ShowMessage("Vill du spela en runda till? (j/n)");
         string answer = Console.ReadLine()?.Trim().ToLower() ?? "";
 
