@@ -1,37 +1,46 @@
 public class ProStrategy : IPlayerStrategy
 {
+    // Grundstrategi för hård hand (inget ess räknas som 11)
+    // Kolumner = givarens öppna kort: 2 3 4 5 6 7 8 9 10 Ess
+    private string[] hardTable =
+    {
+        "HHHHHHHHHH", // 11 eller mindre
+        "HHSSSHHHHH", // 12
+        "SSSSSHHHHH", // 13
+        "SSSSSHHHHH", // 14
+        "SSSSSHHHHH", // 15
+        "SSSSSHHHHH", // 16
+        "SSSSSSSSSS"  // 17 eller mer
+    };
+
+    // Grundstrategi för mjuk hand (ett ess räknas som 11)
+    private string[] softTable =
+    {
+        "HHHHHHHHHH", // 17 eller mindre
+        "SSSSSSSHHH", // 18
+        "SSSSSSSSSS"  // 19 eller mer
+    };
+
     public Move MakeYourMove(Hand hand, Card dealersOpenCard)
     {
-        int myPoints = hand.Value;
-        int dealerPoints = dealersOpenCard.Value;
+        int column = dealersOpenCard.Value - 2;
+        string row;
 
-        // Mjuk hand: ett ess räknas som 11
         if (hand.IsSoft)
         {
-            if (myPoints >= 19)
-            {
-                return Move.Stand;
-            }
-            if (myPoints == 18 && dealerPoints <= 8)
-            {
-                return Move.Stand;
-            }
-            return Move.Hit;
+            int points = Math.Clamp(hand.Value, 17, 19);
+            row = softTable[points - 17];
+        }
+        else
+        {
+            int points = Math.Clamp(hand.Value, 11, 17);
+            row = hardTable[points - 11];
         }
 
-        // Hård hand: inget ess som räknas som 11
-        if (myPoints >= 17)
+        if (row[column] == 'H')
         {
-            return Move.Stand;
+            return Move.Hit;
         }
-        if (myPoints >= 13 && dealerPoints <= 6)
-        {
-            return Move.Stand;
-        }
-        if (myPoints == 12 && dealerPoints >= 4 && dealerPoints <= 6)
-        {
-            return Move.Stand;
-        }
-        return Move.Hit;
+        return Move.Stand;
     }
 }
