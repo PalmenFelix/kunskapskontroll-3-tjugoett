@@ -7,6 +7,11 @@ public class Deck
 
     public Deck(Random random, int numberOfDecks)
     {
+        if (numberOfDecks < 1)
+        {
+            throw new ArgumentOutOfRangeException(nameof(numberOfDecks), "Det måste finnas minst en kortlek");
+        }
+
         this.random = random;
         this.numberOfDecks = numberOfDecks;
         BuildCards();
@@ -43,8 +48,9 @@ public class Deck
     {
         if (cards.Count == 0)
         {
-            throw new InvalidOperationException("Kortleken är tom"); 
+            Reset(); 
         }
+        
         int lastIndex = cards.Count -1;
         Card card = cards[lastIndex];
         cards.RemoveAt(lastIndex);
