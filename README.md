@@ -59,6 +59,9 @@ SimpleStrategy tar kort under 17, ProStrategy följer grundstrategin i en tabell
 Tabellen har bara Hit och Stand, eftersom Double och Split inte finns i spelet.
 
 Philip tillval: 3
+Husregler från konfigurationsfil:
+skapar justerbara regler så man kan spela spelet på olika sätt,
+som om det vore olika kasinon.
 
 Felix tillval: 4
 
