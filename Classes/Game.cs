@@ -6,42 +6,70 @@ class Game
     private Random random = new Random();
     private Menu menu = new Menu();
     private ConsoleUI UI = new ConsoleUI();
+    private RuleSetReader ruleSetReader = new RuleSetReader();
+    private RuleSet rules = new RuleSet();
 
     private GameStorage storage = new GameStorage();// neeed to call  on the method from gamestorage
     private List<Player> players = new List<Player>();
     private List<Player> selectedPlayers = new List<Player>(); // a list of the selected players in the game
     public void SetUpPlayers()
     {
-        selectedPlayers.Clear(); // 8. need to clear the selected players before joining a new game 
-        // otherwise it add the same players.
+        selectedPlayers.Clear();
+
         int number = UI.AskNumberOfPlayers();
+
         for (int i = 1; i <= number; i++)
         {
-            string name =UI.AskPlayerName(i);
-            
-            Player? player = players.FirstOrDefault(
-            p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            int fighter = UI.PickYourFighter(i);
 
-        if (player != null && selectedPlayers.Contains(player))
-         {
-            UI.ShowMessage("Den spelaren är redan med. Välj ett annat namn.");
-            i--;
-            continue;
-         }
-        
+            if (fighter == 1)
+            {
+                string name = UI.AskPlayerName(i);
 
-    if (player == null) // 6 . an existing player isnt added to players again
-        {
-            player = new Player(name);
-            players.Add(player);
-        }
-        
-        selectedPlayers.Add(player);
+                Player? player = players.FirstOrDefault(
+                    p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+                if (player != null && selectedPlayers.Contains(player))
+                {
+                    UI.ShowMessage("Den spelaren är redan med. Välj ett annat namn.");
+                    i--;
+                    continue;
+                }
+
+                if (player == null)
+                {
+                    player = new Player(name);
+                    players.Add(player);
+                }
+
+                player.Strategy = new HumanStrategy(UI);
+                selectedPlayers.Add(player);
+            }
+            else if (fighter == 2)
+            {
+                Player bot = new Player($"Dator {i} (enkel)");
+                bot.Strategy = new SimpleStrategy();
+                selectedPlayers.Add(bot);
+            }
+            else
+            {
+                Player bot = new Player($"Dator {i} (proffs)");
+                bot.Strategy = new ProStrategy();
+                selectedPlayers.Add(bot);
+            }
         }
     }
-public void Start()
+    
+    public void Start()
     {
         players = storage.Load();
+        rules = ruleSetReader.Load();
+
+        foreach (string warning in ruleSetReader.Warnings)
+        {
+            UI.ShowMessage(warning);
+        }
+        UI.ShowRules(rules);
 
 if (!string.IsNullOrEmpty(storage.ErrorMessage))
         {
@@ -72,7 +100,7 @@ private void PlayGame()
 
         CardCounter counter = new CardCounter();
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(rules.DealerHitsSoft17);
 
     // Keep playing rounds until the player chooses to stop.
     bool playing = true;

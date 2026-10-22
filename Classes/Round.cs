@@ -8,6 +8,7 @@ public class Round
     public Shoe Shoe { get; }
     public CardCounter Counter { get; }
     public ConsoleUI UI { get; }
+    public RuleSet Rules { get; }
     public List<Outcome> Results { get; } = new List<Outcome>();
 
     public Round(List<Player> players, Dealer dealer, Shoe shoe, CardCounter counter, ConsoleUI consoleUI)
@@ -23,6 +24,7 @@ public class Round
         Shoe = shoe;
         Counter = counter;
         UI = consoleUI;
+        Rules = rules;
     }
 
     // StartRound: startar rundan
@@ -126,19 +128,15 @@ public class Round
 
         while (playing && !player.Hand.IsBust && !player.Hand.IsBlackjack)
         {
-            string input = UI.GetPlayerChoice().Trim().ToLower();
+            Move move = player.Strategy.MakeYourMove(player.Hand, Dealer.Hand.Cards[0]);
 
-            if (input == "h")
+            if (move == Move.Hit)
             {
                 PlayerHit(player);
             }
-            else if (input == "s")
-            {
-                playing = false;
-            }
             else
             {
-                UI.ShowMessage("Ogiltigt val. Skriv H eller S.");
+                playing = false;
             }
         }
         if (player.Hand.IsBust)
@@ -183,6 +181,10 @@ public class Round
             return player.Hand.IsBlackjack ? Outcome.Blackjack : Outcome.Win;
         }
         else if (player.Hand.IsBlackjack && Dealer.Hand.IsBlackjack)
+        {
+            return Outcome.Push;
+        }
+        else if (!Rules.NaturalBeatsMultiCard21 && player.Hand.Value == 21 && Dealer.Hand.Value == 21)
         {
             return Outcome.Push;
         }
