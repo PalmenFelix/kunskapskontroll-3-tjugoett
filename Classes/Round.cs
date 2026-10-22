@@ -27,7 +27,6 @@ public class Round
         Shoe = shoe;
         Counter = counter;
         UI = consoleUI;
-        Rules = rules;
     }
 
     // StartRound: startar rundan
