@@ -19,6 +19,7 @@ class Game
             string name =UI.AskPlayerName(i);
             
             Player? player = players.FirstOrDefault(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            // Söker efter en befintlig spelare, skiljer inte på stora och små bokstäver
 
         if (player != null && selectedPlayers.Contains(player))
          {
@@ -35,15 +36,15 @@ class Game
         }
         else if (player.Chips.Balance == 0)
         {
-            player.Chips.SaveChips(1000);
+            player.Chips.SaveChips(1000); // Ger en spelare med 0 marker 1000 vid en ny spelsession
         }
-        
-        selectedPlayers.Add(player);
+
+        selectedPlayers.Add(player); // Rensar listan inför en ny spelsession
         }
     }
 public void Start()
     {
-        players = storage.Load();   
+        players = storage.Load(); // Laddar sparade spelare och deras chips
 
 if (!string.IsNullOrEmpty(storage.ErrorMessage))
         {
@@ -82,7 +83,7 @@ private void PlayGame()
         Round round = new Round(selectedPlayers, dealer, deck, UI);
         round.StartRound();
 
-        if (selectedPlayers.Count == 0)
+        if (selectedPlayers.Count == 0) // Avslutar spelsessionen om det inte finns några spelare
         {
             playing = false;
             break;
@@ -101,6 +102,6 @@ private void PlayGame()
         {
         UI.ShowMessage(storage.ErrorMessage);
         }
-    }
+    } // Sparar spelarnas uppgifter och deras antal chips
 }
 

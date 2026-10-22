@@ -113,18 +113,18 @@ public class ConsoleUI
         Console.WriteLine(message);
     }
 
-    public void ShowChips(Player player)
+    public void ShowChips(Player player) // Visar hur mycket chips alla spelare har
     {
         Console.WriteLine($"{player.Name} har {player.Chips.Balance} marker.");
     }
 
-    public int AskBet(Player player)
+    public int AskBet(Player player) // Frågar vad en spelare vill satsa och kollar så att spelaren kan satsa det
     {
         while (true)
         {
-        Console.WriteLine($"Hur mycket vill du satsa? (50 - {player.Chips.Balance}): ");
+        Console.WriteLine($"Hur mycket vill du satsa? (1 - {player.Chips.Balance}): ");
 
-        if (int.TryParse(Console.ReadLine(), out int bet) && bet >= 50 && bet <= player.Chips.Balance)
+        if (int.TryParse(Console.ReadLine(), out int bet) && bet >= 1 && bet <= player.Chips.Balance)
             {
                 return bet;
             }
@@ -133,6 +133,10 @@ public class ConsoleUI
         }
     }
 
+    public void PlayerRemoved(Player player) // Meddelande som visas när en spelare tas bort från bordet som har slut på chips
+    {
+        Console.WriteLine($"{player.Name} har slut på marker och lämnar bordet");
+    }
     
 
     public void ShowBlackjackMessage(Player player)
@@ -143,10 +147,5 @@ public class ConsoleUI
     public void ShowDealerBlackjackMessage()
     {
         Console.WriteLine($"Dealern har blackjack :(");
-    }
-
-    public void PlayerRemoved(Player player)
-    {
-        Console.WriteLine($"{player.Name} har slut på marker och lämnar bordet");
     }
 }
