@@ -19,27 +19,11 @@ class Game
 
         for (int i = 1; i <= number; i++)
         {
-            string name =UI.AskPlayerName(i);
-            
-            Player? player = players.FirstOrDefault(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-            // Söker efter en befintlig spelare, skiljer inte på stora och små bokstäver
+            string name = UI.AskPlayerName(i);
             int fighter = UI.PickYourFighter(i);
 
             if (fighter == 1)
             {
-                string name = UI.AskPlayerName(i);
-
-    if (player == null) // 6 . an existing player isnt added to players again
-        {
-            player = new Player(name);
-            players.Add(player);
-        }
-        else if (player.Chips.Balance == 0)
-        {
-            player.Chips.SaveChips(1000); // Ger en spelare med 0 marker 1000 vid en ny spelsession
-        }
-
-        selectedPlayers.Add(player); // Rensar listan inför en ny spelsession
                 Player? player = players.FirstOrDefault(
                     p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
@@ -54,6 +38,10 @@ class Game
                 {
                     player = new Player(name);
                     players.Add(player);
+                }
+                else if (player.Chips.Balance == 0)
+                {
+                    player.Chips.SaveChips(1000);
                 }
 
                 player.Strategy = new HumanStrategy(UI);
