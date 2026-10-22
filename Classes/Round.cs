@@ -5,11 +5,12 @@ public class Round
 {
     public List<Player> Players { get; }
     public Dealer Dealer { get; }
-    public Deck Deck { get; }
+    public Shoe Shoe { get; }
+    public CardCounter Counter { get; }
     public ConsoleUI UI { get; }
     public List<Outcome> Results { get; } = new List<Outcome>();
 
-    public Round(List<Player> players, Dealer dealer, Deck deck, ConsoleUI consoleUI)
+    public Round(List<Player> players, Dealer dealer, Shoe shoe, CardCounter counter, ConsoleUI consoleUI)
     {
         if (players == null)
             throw new ArgumentNullException(nameof(players));
@@ -19,7 +20,8 @@ public class Round
 
         Players = players;
         Dealer = dealer;
-        Deck = deck;
+        Shoe = shoe;
+        Counter = counter;
         UI = consoleUI;
     }
 
@@ -33,15 +35,16 @@ public class Round
 
         Dealer.StartNewRound();
         Results.Clear();
-        UI.ShowMessage(
-            $"Cards remaining before reset check: {Deck.GetCount()}");
 
-        if (Deck.GetCount() < 15)
+        if (Shoe.NeedsShuffle)
         {
-            UI.ShowMessage("Reshuffling deck!");
-            Deck.Reset();
-            UI.ShowMessage($"Cards after reset: {Deck.GetCount()}");//to verify we have it reseted
+            Shoe.Reset();
+            Counter.Reset();
+
+            UI.ShowMessage(
+                "Skiljekortet har nåtts. Skon blandas om.");
         }
+
     DealCards();
 
     foreach (Player player in Players)
@@ -59,6 +62,8 @@ public class Round
 
         DealerTurn();
         UI.ShowDealerHand(Dealer); // need the UI to get the dealer cards
+        UI.ShowCardCount(Counter, Shoe.GetCount());
+
         if (Dealer.Hand.IsBlackjack)
         {
             UI.ShowDealerBlackjackMessage();
@@ -87,22 +92,31 @@ public class Round
         }
     }
 
+    private Card DealVisibleCard()
+    {
+        Card card = Shoe.Deal();
+
+        Counter.Observe(card);
+
+        return card;
+    }
+
     // DealCards: delar ut kort till spelare och givare
     private void DealCards()
     {
         foreach (Player player in Players)
         {
-            player.Hand.Cards.Add(Deck.Deal());
+            player.Hand.Cards.Add(DealVisibleCard());
         }
 
-        Dealer.Hand.Cards.Add(Deck.Deal());
+        Dealer.Hand.Cards.Add(DealVisibleCard());
 
         foreach (Player player in Players)
         {
-            player.Hand.Cards.Add(Deck.Deal());
+            player.Hand.Cards.Add(DealVisibleCard());
         }
 
-        Dealer.Hand.Cards.Add(Deck.Deal());
+        Dealer.Hand.Cards.Add(Shoe.Deal());
     }
 
     // PlayerTurn: hanterar spelarens tur
@@ -135,7 +149,8 @@ public class Round
 
     private void PlayerHit(Player player)
     {
-        player.Hand.Cards.Add(Deck.Deal());
+        player.Hand.Cards.Add(DealVisibleCard());
+
         UI.ShowPlayerHand(player); //Wanna show the new card rigth
     }
 
@@ -143,10 +158,12 @@ public class Round
     private void DealerTurn()
     {
         Dealer.RevealHoleCard();
+        Card holeCard = Dealer.Hand.Cards[1];
+        Counter.Observe(holeCard);
 
         while (Dealer.ShouldHit() && !Dealer.Hand.IsBust)
         {
-            Dealer.Hand.Cards.Add(Deck.Deal());
+            Dealer.Hand.Cards.Add(DealVisibleCard());
         }
         if (Dealer.Hand.IsBust)
         {

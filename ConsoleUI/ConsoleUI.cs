@@ -117,6 +117,20 @@ public class ConsoleUI
         Console.WriteLine($"{player.Name} fick blackjack");
     }
 
+    public void ShowCardCount(
+    CardCounter counter,
+    int remainingCards)
+    { 
+        Console.WriteLine(
+        $"Löpande räkning: {counter.RunningCount}");
+        
+        Console.WriteLine(
+        $"Sann räkning: {counter.GetTrueCount(remainingCards):F2}");
+        
+        Console.WriteLine(
+        counter.GetIndicator(remainingCards));
+    }
+
     public void ShowDealerBlackjackMessage()
     {
         Console.WriteLine($"Dealern har blackjack :(");
