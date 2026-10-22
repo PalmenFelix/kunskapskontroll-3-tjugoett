@@ -64,11 +64,26 @@ skapar justerbara regler så man kan spela spelet på olika sätt,
 som om det vore olika kasinon.
 
 Felix tillval: 4
+Detta tillvalet handlade om att lägga till en ekonomi. Alla spelare blir tilldelade 1000 marker när de börjar spela. 
+När varje runda börjar satsar man ett antal marker, sen hanteras utbetalningar vid vanlig vinst, naturlig blackjack och oavgjort.
+Förlust resulterar i att man förlorar sina satsade marker. Spelarnas saldo sparas mellan programkörningar, och spelare som får slut på marker lämnar bordet. 
+En spelare med 0 marker kan börja om med 1000 marker i en ny spelsession.
 
 Hamed tillval: 5
 
 
 Vi har inte avvikigt från uppgiftens och spelets grundkrav.
+
+
+### Kända brister
+----
+
+* Datorspelarnas marker sparas inte mellan spelsessioner.
+  Från tillval 2 har det skapads datorstyrda spelare som inte får sitt antal marker sparade mellan spelsessioner.
+  Utan det är bara mänskliga spelares saldo som sparas.
+* Antalet kortlekar följer inte husreglerna från tillval 3.
+  Spelet använder ett fast antal kortlekar istället för att följa NumberOfDecks som finns i houserules.txt.
+
 
 ### __Klassdiagram__
 
