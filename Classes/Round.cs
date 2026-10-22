@@ -9,10 +9,11 @@ public class Round
     public Dealer Dealer { get; }
     public Deck Deck { get; }
     public ConsoleUI UI { get; }
+    public RuleSet Rules { get; }
     public List<Outcome> Results { get; } = new List<Outcome>();
     public Dictionary<Player, int> Bets { get; } = new();
 
-    public Round(List<Player> players, Dealer dealer, Deck deck, ConsoleUI consoleUI)
+    public Round(List<Player> players, Dealer dealer, Deck deck, ConsoleUI consoleUI, RuleSet rules)
     {
         if (players == null)
             throw new ArgumentNullException(nameof(players));
@@ -24,6 +25,7 @@ public class Round
         Dealer = dealer;
         Deck = deck;
         UI = consoleUI;
+        Rules = rules;
     }
 
     // StartRound: startar rundan
@@ -52,9 +54,9 @@ public class Round
         Dealer.StartNewRound();
         Results.Clear();
         UI.ShowMessage(
-            $"Cards remaining before reset check: {Deck.GetCount()}");
+            $"Cards remaining before reset check: {Deck.GetCount()}"); //Should be in UI. checking with teamates later on
 
-        if (Deck.GetCount() < 15)
+        if (Deck.GetCount() < Rules.ReshuffleThreshold)
         {
             UI.ShowMessage("Reshuffling deck!");
             Deck.Reset();
@@ -134,19 +136,15 @@ public class Round
 
         while (playing && !player.Hand.IsBust && !player.Hand.IsBlackjack)
         {
-            string input = UI.GetPlayerChoice().Trim().ToLower();
+            Move move = player.Strategy.MakeYourMove(player.Hand, Dealer.Hand.Cards[0]);
 
-            if (input == "h")
+            if (move == Move.Hit)
             {
                 PlayerHit(player);
             }
-            else if (input == "s")
-            {
-                playing = false;
-            }
             else
             {
-                UI.ShowMessage("Ogiltigt val. Skriv H eller S.");
+                playing = false;
             }
         }
         if (player.Hand.IsBust)
@@ -188,6 +186,10 @@ public class Round
             return player.Hand.IsBlackjack ? Outcome.Blackjack : Outcome.Win;
         }
         else if (player.Hand.IsBlackjack && Dealer.Hand.IsBlackjack)
+        {
+            return Outcome.Push;
+        }
+        else if (!Rules.NaturalBeatsMultiCard21 && player.Hand.Value == 21 && Dealer.Hand.Value == 21)
         {
             return Outcome.Push;
         }

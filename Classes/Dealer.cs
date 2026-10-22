@@ -1,15 +1,17 @@
 public class Dealer : Participant
 {
     public bool HoleCardRevealed { get; private set; }
+    private readonly bool hitsSoft17;
 
-    public Dealer() : base("Givaren", ParticipantType.Dealer)
+    public Dealer(bool hitsSoft17) : base("Givaren", ParticipantType.Dealer)
     {
+        this.hitsSoft17 = hitsSoft17;
         HoleCardRevealed = false;
     }
 
     public bool ShouldHit()
     {
-        if (Hand.Value <= 16)
+        if (Hand.Value <= 16 || (Hand.Value == 17 && Hand.IsSoft && hitsSoft17))
         {
             return true;
         }
