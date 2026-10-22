@@ -11,34 +11,53 @@ class Game
     private List<Player> selectedPlayers = new List<Player>(); // a list of the selected players in the game
     public void SetUpPlayers()
     {
-        selectedPlayers.Clear(); // 8. need to clear the selected players before joining a new game 
-        // otherwise it add the same players.
+        selectedPlayers.Clear();
+
         int number = UI.AskNumberOfPlayers();
+
         for (int i = 1; i <= number; i++)
         {
-            string name =UI.AskPlayerName(i);
-            
-            Player? player = players.FirstOrDefault(
-            p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            int fighter = UI.PickYourFighter(i);
 
-        if (player != null && selectedPlayers.Contains(player))
-         {
-            UI.ShowMessage("Den spelaren är redan med. Välj ett annat namn.");
-            i--;
-            continue;
-         }
-        
+            if (fighter == 1)
+            {
+                string name = UI.AskPlayerName(i);
 
-    if (player == null) // 6 . an existing player isnt added to players again
-        {
-            player = new Player(name);
-            players.Add(player);
-        }
-        
-        selectedPlayers.Add(player);
+                Player? player = players.FirstOrDefault(
+                    p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+                if (player != null && selectedPlayers.Contains(player))
+                {
+                    UI.ShowMessage("Den spelaren är redan med. Välj ett annat namn.");
+                    i--;
+                    continue;
+                }
+
+                if (player == null)
+                {
+                    player = new Player(name);
+                    players.Add(player);
+                }
+
+                player.Strategy = new HumanStrategy(UI);
+                selectedPlayers.Add(player);
+            }
+            else if (fighter == 2)
+            {
+                Player bot = new Player($"Dator {i} (enkel)");
+                bot.Strategy = new SimpleStrategy();
+                selectedPlayers.Add(bot);
+            }
+            else
+            {
+                Player bot = new Player($"Dator {i} (proffs)");
+                bot.Strategy = new ProStrategy();
+                selectedPlayers.Add(bot);
+            }
         }
     }
-public void Start()
+    
+    public void Start()
     {
         players = storage.Load();
         rules = ruleSetReader.Load();

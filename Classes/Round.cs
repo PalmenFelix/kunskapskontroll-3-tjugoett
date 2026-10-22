@@ -114,19 +114,15 @@ public class Round
 
         while (playing && !player.Hand.IsBust && !player.Hand.IsBlackjack)
         {
-            string input = UI.GetPlayerChoice().Trim().ToLower();
+            Move move = player.Strategy.MakeYourMove(player.Hand, Dealer.Hand.Cards[0]);
 
-            if (input == "h")
+            if (move == Move.Hit)
             {
                 PlayerHit(player);
             }
-            else if (input == "s")
-            {
-                playing = false;
-            }
             else
             {
-                UI.ShowMessage("Ogiltigt val. Skriv H eller S.");
+                playing = false;
             }
         }
         if (player.Hand.IsBust)
