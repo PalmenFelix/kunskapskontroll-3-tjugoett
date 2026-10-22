@@ -68,7 +68,7 @@ class Game
     public void Start()
     {
         players = storage.Load(); // Laddar sparade spelare och deras chips
-        players = storage.Load();
+    
         rules = ruleSetReader.Load();
 
         foreach (string warning in ruleSetReader.Warnings)
