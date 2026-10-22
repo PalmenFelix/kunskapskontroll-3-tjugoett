@@ -51,6 +51,9 @@ med ram, suit, rank.
 Daria tillval: 2
 
 Philip tillval: 3
+Husregler från konfigurationsfil:
+skapar justerbara regler så man kan spela spelet på olika sätt,
+som om det vore olika kasinon.
 
 Felix tillval: 4
 
