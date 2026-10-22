@@ -138,6 +138,21 @@ public class ConsoleUI
     {
         Console.WriteLine(message);
     }
+
+    public void ShowRules(RuleSet rules)
+    {
+        Console.WriteLine("Husregler:");
+        Console.WriteLine(rules.DealerHitsSoft17
+            ? "- Givaren köper på mjuk 17"
+            : "- Givaren stannar på mjuk 17");
+        Console.WriteLine($"- Antal lekar: {rules.NumberOfDecks}");
+        Console.WriteLine($"- Korten blandas om när det är färre än {rules.ReshuffleThreshold} kort kvar");
+        Console.WriteLine(rules.NaturalBeatsMultiCard21
+            ? "- Naturlig 21 slår 21 med tre eller fler kort"
+            : "- Naturlig 21 mot 21 med tre eller fler kort blir lika");
+        Console.WriteLine();
+    }
+    
     public void ShowBlackjackMessage(Player player)
     {
         Console.WriteLine($"{player.Name} fick blackjack");
