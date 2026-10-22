@@ -14,9 +14,54 @@ Regler för givaren ska ligga under dealer.
 
 
 
-Feature two gave some interesting problems in  both lower and uppercases(Rank).
-The card was not public so had to add that one 2.
-We had some issue while changing rows for the card in the array. Hard time trying to figure out
-how to place them, also wanted more graphics but realized that it was taking up datamemory and unneccesary for the assigment.
-Question about making seperate for the ones that have a specifik suit arouse.
-The enum from rank wanted in stack instead of rows, but that was only cus it wasnt rigth formalities in lower/uppercases.
+### Hur du startar programet
+
+Du startar genom att köra dotnet run 
+```C#
+public class Program
+{
+    static void Main(string[] args)
+    {
+        Game game = new Game();
+        game.Start();
+    }
+}
+```
+### Översikt över klasserna
+----
+
+1. Programmet är uppdelat i flera klasser som tillsammans hanterar spelets logik, korten och användargränssnittet.
+2. Card: Representerar ett spelkort med en valör och en färg.
+3. Deck / Shoe: Hanterar kortleken och de kort som används under spelets gång.
+4. Hand: Innehåller en deltagares kort och beräknar handens totala värde.
+5. Player: Representerar en spelare som deltar i spelet.
+6. Dealer: Representerar dealern och hanterar dealerns roll i spelet.
+7. Round: Samordnar de olika momenten i en spelrunda och kopplar samman spelets olika delar.
+8. CardRenderer: Skapar den grafiska representationen av spelkort i konsolen.
+9. ConsoleUI: Hanterar kommunikationen med användaren och visar information i konsolen.
+
+Klasserna har olika ansvarsområden men samarbetar för att spelet ska fungera. 
+
+
+__Peter tillval 1__
+kortgrafik i konsolen: 
+Gör så att korten reprensenteras i konsolen 
+med ram, suit, rank.
+
+Daria tillval: 2
+
+Philip tillval: 3
+
+Felix tillval: 4
+
+Hamed tillval: 5
+
+
+Vi har inte avvikigt från uppgiftens och spelets grundkrav.
+
+### __Klassdiagram__
+
+
+![alt text](image.png)
+
+
