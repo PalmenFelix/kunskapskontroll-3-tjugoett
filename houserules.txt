@@ -1,0 +1,13 @@
+# Husregler för tjugoett
+
+# Ska givaren köpa på mjuk 17? (true/false)
+DealerHitsSoft17=false
+
+# Hur många kortlekar spelas det med? (1-8)
+NumberOfDecks=1
+
+# Blanda om när färre än så här många kort är kvar (minst 15, mindre än antal kort: 52 per lek)
+ReshuffleThreshold=15
+
+# Vinner naturlig tjugoett över tjugoett med tre eller fler kort? (true/false)
+NaturalBeatsMultiCard21=true

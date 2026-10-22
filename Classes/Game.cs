@@ -5,15 +5,18 @@ class Game
     Random random = new Random();
     private Menu menu = new Menu();
     private ConsoleUI UI = new ConsoleUI();
+    private RuleSetReader ruleSetReader = new RuleSetReader();
+    private RuleSet rules = new RuleSet();
 
     private GameStorage storage = new GameStorage();// neeed to call  on the method from gamestorage
     private List<Player> players = new();
     private List<Player> selectedPlayers = new List<Player>(); // a list of the selected players in the game
     public void SetUpPlayers()
     {
-        selectedPlayers.Clear(); // 8. need to clear the selected players before joining a new game 
-        // otherwise it add the same players.
+        selectedPlayers.Clear();
+
         int number = UI.AskNumberOfPlayers();
+
         for (int i = 1; i <= number; i++)
         {
             string name =UI.AskPlayerName(i);
@@ -42,7 +45,8 @@ class Game
         selectedPlayers.Add(player); // Rensar listan inför en ny spelsession
         }
     }
-public void Start()
+    
+    public void Start()
     {
         players = storage.Load(); // Laddar sparade spelare och deras chips
 
@@ -70,17 +74,17 @@ private void PlayGame()
     {
     SetUpPlayers();
 
-        Deck deck = new Deck(random);
+        Deck deck = new Deck(random, rules.NumberOfDecks);
         deck.Shuffle();
 
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(rules.DealerHitsSoft17);
 
     // Keep playing rounds until the player chooses to stop.
     bool playing = true;
 
     while (playing)
         {
-        Round round = new Round(selectedPlayers, dealer, deck, UI);
+        Round round = new Round(selectedPlayers, dealer, deck, UI, rules);
         round.StartRound();
 
         if (selectedPlayers.Count == 0) // Avslutar spelsessionen om det inte finns några spelare
