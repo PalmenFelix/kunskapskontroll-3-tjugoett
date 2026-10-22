@@ -7,7 +7,9 @@ Ja, card har value 2-9 har sig själv som value, 10-kung har 10 som value och es
 Nej, dealern ska inte räknas som spelare.  
 
 ### Vem bestämmer vad en spelare gör?
-ConsoleUI.  
+Från början: ConsoleUI.
+
+Ändrat i tillval 2: nu bestämmer spelarens strategi (IPlayerStrategy). En människa har HumanStrategy, som fortfarande frågar via ConsoleUI (H eller S). En datorspelare bestämmer själv. Vi ändrade det för att datorspelare också ska kunna sitta vid bordet.
 
 ### Var ligger givarens regler?
 Regler för givaren ska ligga under dealer.
@@ -39,6 +41,8 @@ public class Program
 7. Round: Samordnar de olika momenten i en spelrunda och kopplar samman spelets olika delar.
 8. CardRenderer: Skapar den grafiska representationen av spelkort i konsolen.
 9. ConsoleUI: Hanterar kommunikationen med användaren och visar information i konsolen.
+10. IPlayerStrategy: Interface som bestämmer spelarens drag (Hit eller Stand).
+11. SimpleStrategy, ProStrategy, HumanStrategy: Olika strategier för datorspelare och människor.
 
 Klasserna har olika ansvarsområden men samarbetar för att spelet ska fungera. 
 
@@ -48,7 +52,11 @@ kortgrafik i konsolen:
 Gör så att korten reprensenteras i konsolen 
 med ram, suit, rank.
 
-Daria tillval: 2
+__Daria tillval 2__
+Datorspelare med strategi:
+Man kan välja människa eller dator för varje plats. Alla strategier har samma interface, IPlayerStrategy.
+SimpleStrategy tar kort under 17, ProStrategy följer grundstrategin i en tabell, HumanStrategy frågar spelaren H eller S.
+Tabellen har bara Hit och Stand, eftersom Double och Split inte finns i spelet.
 
 Philip tillval: 3
 
