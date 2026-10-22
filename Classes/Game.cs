@@ -1,13 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 class Game
 {
-    Random random = new Random();
+    private Random random = new Random();
     private Menu menu = new Menu();
     private ConsoleUI UI = new ConsoleUI();
     private RuleSetReader ruleSetReader = new RuleSetReader();
     private RuleSet rules = new RuleSet();
 
     private GameStorage storage = new GameStorage();// neeed to call  on the method from gamestorage
-    private List<Player> players = new();
+    private List<Player> players = new List<Player>();
     private List<Player> selectedPlayers = new List<Player>(); // a list of the selected players in the game
     public void SetUpPlayers()
     {
@@ -71,6 +74,7 @@ class Game
 if (!string.IsNullOrEmpty(storage.ErrorMessage))
         {
             UI.ShowMessage(storage.ErrorMessage);
+            return;
         }            
         bool running = true;
         
@@ -92,8 +96,9 @@ private void PlayGame()
     {
     SetUpPlayers();
 
-        Deck deck = new Deck(random, rules.NumberOfDecks);
-        deck.Shuffle();
+        Shoe shoe = new Shoe(4, random);
+
+        CardCounter counter = new CardCounter();
 
         Dealer dealer = new Dealer(rules.DealerHitsSoft17);
 
@@ -102,7 +107,8 @@ private void PlayGame()
 
     while (playing)
         {
-        Round round = new Round(selectedPlayers, dealer, deck, UI, rules);
+        Round round = new Round(selectedPlayers, dealer, shoe, counter, UI);
+        
         round.StartRound();
 
         UI.ShowMessage("Vill du spela en runda till? (j/n)");
