@@ -31,14 +31,14 @@ public class Round
     {
         foreach (Player player in Players.ToList())
         {
-            if (player.Chips.Balance <= 0)
+            if (player.Chips.Balance <= 0) // Spelare med 0 marker eller mindre får inte delta i nästa runda
                 {
                     UI.PlayerRemoved(player);
                     Players.Remove(player);
                 }       
         }
 
-        if (Players.Count == 0)
+        if (Players.Count == 0) // Avsluta rundan om alla spelare har slut på marker
             {
                 UI.ShowMessage("Alla spelare har slut på marker. Spelet avslutas.");
                 return;
@@ -61,7 +61,7 @@ public class Round
             UI.ShowMessage($"Cards after reset: {Deck.GetCount()}");//to verify we have it reseted
         }
 
-        PlaceBets();
+        PlaceBets(); // Tillkallar metoden PlaceBets()
 
         DealCards();
 
@@ -86,7 +86,7 @@ public class Round
         }
         foreach (Player player in Players)
         {
-            Outcome result = CheckWinner(player);
+            Outcome result = CheckWinner(player);  // Beräkna resultatet och betalar ut eventuell vinst eller psuh
             Results.Add(result);
             PayOut(player, result);
 
@@ -217,34 +217,34 @@ public class Round
 
     public void PlaceBets()
     {
-        Bets.Clear();
+        Bets.Clear(); // Rensa föregående rundas insatser
 
         foreach (Player player in Players)
         {
-            UI.ShowChips(player);
+            UI.ShowChips(player); // Visa spelarens saldo innan insatsen väljs
 
-            int bet = UI.AskBet(player);
+            int bet = UI.AskBet(player); // Frågar hur mycket spelaren vill satsa
 
-            if (player.Chips.RemoveChips(bet))
+            if (player.Chips.RemoveChips(bet)) // Dra insatsen från saldot och spara den om satsningen var giltig
             {
                 Bets[player] = bet; 
             }
         }
     }
 
-    public void PayOut(Player player, Outcome result)
+    public void PayOut(Player player, Outcome result) // Betalar ut marker beroende på resultatet och spelarens insats
     {
-        int bet = Bets[player];
+        int bet = Bets[player]; // Vad spelaren satstade
         
-        if (result == Outcome.Win)
+        if (result == Outcome.Win) // Vanlig vinst: betalar 1:1
         {
             player.Chips.AddChips(bet * 2);
         }
-        else if (result == Outcome.Push)
+        else if (result == Outcome.Push) // Push: Får tillbaka markerna man satsade
         {
             player.Chips.AddChips(bet);
         }
-        else if (result == Outcome.Blackjack)
+        else if (result == Outcome.Blackjack) // Blackjack: betalar 2:3
         {
             player.Chips.AddChips(bet + (bet * 3 / 2));
         }
