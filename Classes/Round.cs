@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
+using System.Linq;
 
 public class Round
 {
@@ -10,6 +12,7 @@ public class Round
     public ConsoleUI UI { get; }
     public RuleSet Rules { get; }
     public List<Outcome> Results { get; } = new List<Outcome>();
+    public Dictionary<Player, int> Bets { get; } = new();
 
     public Round(List<Player> players, Dealer dealer, Shoe shoe, CardCounter counter, ConsoleUI consoleUI)
     {
@@ -30,6 +33,21 @@ public class Round
     // StartRound: startar rundan
     public void StartRound()
     {
+        foreach (Player player in Players.ToList())
+        {
+            if (player.Chips.Balance <= 0) // Spelare med 0 marker eller mindre får inte delta i nästa runda
+                {
+                    UI.PlayerRemoved(player);
+                    Players.Remove(player);
+                }       
+        }
+
+        if (Players.Count == 0) // Avsluta rundan om alla spelare har slut på marker
+            {
+                UI.ShowMessage("Alla spelare har slut på marker. Spelet avslutas.");
+                return;
+            }
+        
         foreach (Player player in Players)
         {
             player.Hand.Cards.Clear();
@@ -47,9 +65,14 @@ public class Round
                 "Skiljekortet har nåtts. Skon blandas om.");
         }
 
-    DealCards();
 
-    foreach (Player player in Players)
+        PlaceBets(); // Tillkallar metoden PlaceBets()
+
+        DealCards();
+     
+
+       
+        foreach (Player player in Players)
         {
             UI.ShowDealerHand(Dealer);
             UI.ShowPlayerHand(player);
@@ -72,8 +95,9 @@ public class Round
         }
         foreach (Player player in Players)
         {
-            Outcome result = CheckWinner(player);
+            Outcome result = CheckWinner(player);  // Beräkna resultatet och betalar ut eventuell vinst eller psuh
             Results.Add(result);
+            PayOut(player, result);
 
             switch (result)
             {
@@ -207,6 +231,43 @@ public class Round
         else
         {
             return Outcome.Push;
+        }
+    }
+
+    // Feature-4: Betting chips
+
+    public void PlaceBets()
+    {
+        Bets.Clear(); // Rensa föregående rundas insatser
+
+        foreach (Player player in Players)
+        {
+            UI.ShowChips(player); // Visa spelarens saldo innan insatsen väljs
+
+            int bet = UI.AskBet(player); // Frågar hur mycket spelaren vill satsa
+
+            if (player.Chips.RemoveChips(bet)) // Dra insatsen från saldot och spara den om satsningen var giltig
+            {
+                Bets[player] = bet; 
+            }
+        }
+    }
+
+    public void PayOut(Player player, Outcome result) // Betalar ut marker beroende på resultatet och spelarens insats
+    {
+        int bet = Bets[player]; // Vad spelaren satstade
+        
+        if (result == Outcome.Win) // Vanlig vinst: betalar 1:1
+        {
+            player.Chips.AddChips(bet * 2);
+        }
+        else if (result == Outcome.Push) // Push: Får tillbaka markerna man satsade
+        {
+            player.Chips.AddChips(bet);
+        }
+        else if (result == Outcome.Blackjack) // Blackjack: betalar 2:3
+        {
+            player.Chips.AddChips(bet + (bet * 3 / 2));
         }
     }
 }

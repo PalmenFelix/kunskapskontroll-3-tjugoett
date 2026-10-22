@@ -9,6 +9,7 @@ public class PlayerData
     public int Wins { get; set; }
     public int Losses { get; set; }
     public int Pushes { get; set; }
+    public int Chips { get; set; }
 }
 
 public class GameStorage
@@ -31,6 +32,7 @@ public class GameStorage
             data.Wins = player.Wins;
             data.Losses = player.Losses;
             data.Pushes = player.Pushes;
+            data.Chips = player.Chips.Balance; // Här kopieras spelarens antal chips till objektet data, så att det kan sparas tillsammans med spelarens andra uppgifter
 
             savedPlayers.Add(data);
         }
@@ -85,7 +87,8 @@ public class GameStorage
                     string.IsNullOrWhiteSpace(data.Name) ||
                     data.Wins < 0 ||
                     data.Losses < 0 ||
-                    data.Pushes < 0)
+                    data.Pushes < 0 ||
+                    data.Chips < 0) // Kollar om spelare har mindre än 0 chips
                 {
                     ErrorMessage =
                         "Sparfilen innehåller felaktiga spelaruppgifter.";
@@ -102,6 +105,7 @@ public class GameStorage
                 player.Losses = data.Losses;
                 player.Pushes = data.Pushes;
 
+                player.Chips.SaveChips(data.Chips); // Hämtar spelarens sparade saldo
                 players.Add(player);
             }
 

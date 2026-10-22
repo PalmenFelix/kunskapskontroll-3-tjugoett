@@ -159,6 +159,32 @@ public class ConsoleUI
         Console.WriteLine(message);
     }
 
+    public void ShowChips(Player player) // Visar hur mycket chips alla spelare har
+    {
+        Console.WriteLine($"{player.Name} har {player.Chips.Balance} marker.");
+    }
+
+    public int AskBet(Player player) // Frågar vad en spelare vill satsa och kollar så att spelaren kan satsa det
+    {
+        while (true)
+        {
+        Console.WriteLine($"Hur mycket vill du satsa? (1 - {player.Chips.Balance}): ");
+
+        if (int.TryParse(Console.ReadLine(), out int bet) && bet >= 1 && bet <= player.Chips.Balance)
+            {
+                return bet;
+            }
+
+            Console.WriteLine("Ogiltlig satsning");
+        }
+    }
+
+    public void PlayerRemoved(Player player) // Meddelande som visas när en spelare tas bort från bordet som har slut på chips
+    {
+        Console.WriteLine($"{player.Name} har slut på marker och lämnar bordet");
+    }
+    
+
     public void ShowRules(RuleSet rules)
     {
         Console.WriteLine("Husregler:");

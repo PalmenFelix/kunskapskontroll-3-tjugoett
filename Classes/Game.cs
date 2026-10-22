@@ -1,3 +1,5 @@
+using System.Linq;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +22,11 @@ class Game
 
         for (int i = 1; i <= number; i++)
         {
+            string name = UI.AskPlayerName(i);
             int fighter = UI.PickYourFighter(i);
 
             if (fighter == 1)
             {
-                string name = UI.AskPlayerName(i);
-
                 Player? player = players.FirstOrDefault(
                     p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 
@@ -40,6 +41,10 @@ class Game
                 {
                     player = new Player(name);
                     players.Add(player);
+                }
+                else if (player.Chips.Balance == 0)
+                {
+                    player.Chips.SaveChips(1000);
                 }
 
                 player.Strategy = new HumanStrategy(UI);
@@ -62,7 +67,8 @@ class Game
     
     public void Start()
     {
-        players = storage.Load();
+        players = storage.Load(); // Laddar sparade spelare och deras chips
+    
         rules = ruleSetReader.Load();
 
         foreach (string warning in ruleSetReader.Warnings)
@@ -111,6 +117,12 @@ private void PlayGame()
         
         round.StartRound();
 
+        if (selectedPlayers.Count == 0) // Avslutar spelsessionen om det inte finns några spelare
+        {
+            playing = false;
+            break;
+        } 
+
         UI.ShowMessage("Vill du spela en runda till? (j/n)");
         string answer = Console.ReadLine()?.Trim().ToLower() ?? "";
 
@@ -124,6 +136,6 @@ private void PlayGame()
         {
         UI.ShowMessage(storage.ErrorMessage);
         }
-    }
+    } // Sparar spelarnas uppgifter och deras antal chips
 }
 

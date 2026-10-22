@@ -9,4 +9,8 @@ public class Player : Participant
         : base(name, ParticipantType.Player)
     {
     }
+
+    // feature-4: Chips for players
+    public Chips Chips { get; } = new Chips();
+    
 }
