@@ -1,8 +1,9 @@
 
-using System;
 
 public class ConsoleUI
 {
+    private readonly CardRenderer cardRenderer = new CardRenderer();
+
     public int AskNumberOfPlayers()
     {
         while (true)
@@ -51,20 +52,24 @@ public class ConsoleUI
     {
         Console.WriteLine($"{player.Name}'s hand:");
 
+        // Keep the ace logic: an ace can count as 1 or 11.
         int acesAsOne = player.Hand.AcesCountedAsOne;
+
+        List<string[]> renderedCards = new List<string[]>();
 
         foreach (Card card in player.Hand.Cards)
         {
-            int shown = card.Value;
+            // The card graphic shows A; Hand.Value calculates 1 or 11.
+            renderedCards.Add(cardRenderer.RenderCard(card));
 
             if (card.Rank == Rank.ace && acesAsOne > 0)
             {
-                shown = 1;
+                // This ace is counted as 1 in the hand total.
                 acesAsOne--;
             }
-
-            Console.WriteLine(card.ToString(shown));
         }
+
+        RenderCardsSideBySide(renderedCards);
 
         Console.WriteLine($"Total: {player.Hand.Value}");
     }
@@ -75,40 +80,61 @@ public class ConsoleUI
 
         int acesAsOne = dealer.Hand.AcesCountedAsOne;
 
+        List<string[]> renderedCards = new List<string[]>();
+
         for (int i = 0; i < dealer.Hand.Cards.Count; i++)
         {
             // Hide the dealer's second card until it is revealed.
             if (i == 1 && !dealer.HoleCardRevealed)
             {
-                Console.WriteLine("[Dolt kort]");
+                renderedCards.Add(cardRenderer.RenderCardBack());
                 continue;
             }
 
             Card card = dealer.Hand.Cards[i];
-            int shown = card.Value;
+
+            renderedCards.Add(cardRenderer.RenderCard(card));
 
             if (card.Rank == Rank.ace && acesAsOne > 0)
             {
-                shown = 1;
+                // This ace is counted as 1 in the hand total.
                 acesAsOne--;
             }
-
-            Console.WriteLine(card.ToString(shown));
         }
 
-        // Do not reveal the dealer's total while the hole card is hidden.
-        if (dealer.HoleCardRevealed)
-        {
-            Console.WriteLine($"Total: {dealer.Hand.Value}");
+         RenderCardsSideBySide(renderedCards);
+
+         // Do not reveal the dealer's total while the hole card is hidden.
+         if (dealer.HoleCardRevealed)
+         {
+             Console.WriteLine($"Total: {dealer.Hand.Value}");
         }
         else if (dealer.Hand.Cards.Count > 0)
         {
-            Console.WriteLine(
-                $"Synligt värde: {dealer.Hand.Cards[0].Value}");
+            Console.WriteLine($"Synligt värde: {dealer.Hand.Cards[0].Value}");
         }
     }
 
-    public void ShowMessage(string message)
+    private void RenderCardsSideBySide(List<string[]> renderedCards)
+    {
+        if (renderedCards.Count == 0)
+        {
+            Console.WriteLine("(Inga kort)");
+            return;
+        }
+
+        for (int row = 0; row < renderedCards[0].Length; row++)
+        {
+            foreach (string[] card in renderedCards)
+            {
+                Console.Write(card[row] + " ");
+            }
+
+            Console.WriteLine();
+        }
+    }
+
+     public void ShowMessage(string message)
     {
         Console.WriteLine(message);
     }
@@ -122,3 +148,5 @@ public class ConsoleUI
         Console.WriteLine($"Dealern har blackjack :(");
     }
 }
+    
+
