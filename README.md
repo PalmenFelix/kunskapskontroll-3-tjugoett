@@ -71,9 +71,7 @@ En spelare med 0 marker kan börja om med 1000 marker i en ny spelsession.
 
 Hamed tillval: 5
 
-
-Vi har inte avvikigt från uppgiftens och spelets grundkrav.
-
+Detta tillval handlar om att bygger en sko med flera blandade kortlekar. Ett skiljekort visar när skon ska blandas om, men den pågående rundan spelas färdigt först. Man bygger också en korträknare som räknar synliga kort enligt Hi-Lo-systemet och visar löpande räkning, sann räkning och hur gynnsamt läget är. Givarens hålkort räknas först när det visas.
 
 ### Kända brister
 ----
