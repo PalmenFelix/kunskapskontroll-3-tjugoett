@@ -83,6 +83,7 @@ Vi har inte avvikigt från uppgiftens och spelets grundkrav.
   Utan det är bara mänskliga spelares saldo som sparas.
 * Antalet kortlekar följer inte husreglerna från tillval 3.
   Spelet använder ett fast antal kortlekar istället för att följa NumberOfDecks som finns i houserules.txt.
+* ReshuffleThreshold stämmer inte överens med vad houserules säger. 
 
 
 ### __Klassdiagram__
